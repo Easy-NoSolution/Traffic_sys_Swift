@@ -1,0 +1,6 @@
+framework module Pods_Traffic_sys_Swift {
+  umbrella header "Pods-Traffic_sys_Swift-umbrella.h"
+
+  export *
+  module * { export * }
+}

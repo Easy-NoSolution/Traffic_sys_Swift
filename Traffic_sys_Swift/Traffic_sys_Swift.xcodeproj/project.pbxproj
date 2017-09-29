@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		99C382DF37D9DFFE2EE71FCE /* Pods_Traffic_sys_Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24323B859860D813BC295AAE /* Pods_Traffic_sys_Swift.framework */; };
 		CA48F0AC1F7DCAE9008BCFBC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA48F0AB1F7DCAE9008BCFBC /* AppDelegate.swift */; };
 		CA48F0AE1F7DCAE9008BCFBC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA48F0AD1F7DCAE9008BCFBC /* ViewController.swift */; };
 		CA48F0B11F7DCAE9008BCFBC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA48F0AF1F7DCAE9008BCFBC /* Main.storyboard */; };
@@ -15,6 +16,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		24323B859860D813BC295AAE /* Pods_Traffic_sys_Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Traffic_sys_Swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A477C3810EB90B33EA8F8048 /* Pods-Traffic_sys_Swift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Traffic_sys_Swift.release.xcconfig"; path = "Pods/Target Support Files/Pods-Traffic_sys_Swift/Pods-Traffic_sys_Swift.release.xcconfig"; sourceTree = "<group>"; };
 		CA48F0A81F7DCAE9008BCFBC /* Traffic_sys_Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Traffic_sys_Swift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA48F0AB1F7DCAE9008BCFBC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CA48F0AD1F7DCAE9008BCFBC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -22,6 +25,7 @@
 		CA48F0B21F7DCAE9008BCFBC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CA48F0B51F7DCAE9008BCFBC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CA48F0B71F7DCAE9008BCFBC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D0D2F5A5E6D2815FB67070FD /* Pods-Traffic_sys_Swift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Traffic_sys_Swift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Traffic_sys_Swift/Pods-Traffic_sys_Swift.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +33,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99C382DF37D9DFFE2EE71FCE /* Pods_Traffic_sys_Swift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1A5CEFEB594B7202181B2913 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D0D2F5A5E6D2815FB67070FD /* Pods-Traffic_sys_Swift.debug.xcconfig */,
+				A477C3810EB90B33EA8F8048 /* Pods-Traffic_sys_Swift.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		20E2CA9556EB3F61D2E38669 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				24323B859860D813BC295AAE /* Pods_Traffic_sys_Swift.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		CA48F09F1F7DCAE9008BCFBC = {
 			isa = PBXGroup;
 			children = (
 				CA48F0AA1F7DCAE9008BCFBC /* Traffic_sys_Swift */,
 				CA48F0A91F7DCAE9008BCFBC /* Products */,
+				1A5CEFEB594B7202181B2913 /* Pods */,
+				20E2CA9556EB3F61D2E38669 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -71,9 +95,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CA48F0BA1F7DCAE9008BCFBC /* Build configuration list for PBXNativeTarget "Traffic_sys_Swift" */;
 			buildPhases = (
+				23DED100562763E269A178AA /* [CP] Check Pods Manifest.lock */,
 				CA48F0A41F7DCAE9008BCFBC /* Sources */,
 				CA48F0A51F7DCAE9008BCFBC /* Frameworks */,
 				CA48F0A61F7DCAE9008BCFBC /* Resources */,
+				F3DF47AB4BE70C78FD03B8A6 /* [CP] Embed Pods Frameworks */,
+				88A7BFA9A62DF0CE16F74F38 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -130,6 +157,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		23DED100562763E269A178AA /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		88A7BFA9A62DF0CE16F74F38 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Traffic_sys_Swift/Pods-Traffic_sys_Swift-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F3DF47AB4BE70C78FD03B8A6 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Traffic_sys_Swift/Pods-Traffic_sys_Swift-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		CA48F0A41F7DCAE9008BCFBC /* Sources */ = {
@@ -272,11 +347,13 @@
 		};
 		CA48F0BB1F7DCAE9008BCFBC /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D0D2F5A5E6D2815FB67070FD /* Pods-Traffic_sys_Swift.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V2RZX97NSW;
 				INFOPLIST_FILE = Traffic_sys_Swift/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.hhh.Traffic-sys-Swift";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -287,11 +364,13 @@
 		};
 		CA48F0BC1F7DCAE9008BCFBC /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A477C3810EB90B33EA8F8048 /* Pods-Traffic_sys_Swift.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V2RZX97NSW;
 				INFOPLIST_FILE = Traffic_sys_Swift/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.hhh.Traffic-sys-Swift";
 				PRODUCT_NAME = "$(TARGET_NAME)";
