@@ -23,6 +23,7 @@
 		CACDCEF81F7DE0E500B2EDAA /* UINavigationBar-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA48F0DA1F7DD112008BCFBC /* UINavigationBar-Extension.swift */; };
 		CACDCEF91F7DE0E500B2EDAA /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA48F0DB1F7DD112008BCFBC /* Common.swift */; };
 		CACDCEFA1F7DE0E500B2EDAA /* NetworkTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA48F0DD1F7DD112008BCFBC /* NetworkTools.swift */; };
+		CADBED0A1F7DED0900B06B84 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADBED091F7DED0900B06B84 /* UserInfo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +46,7 @@
 		CA48F0DB1F7DD112008BCFBC /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		CA48F0DD1F7DD112008BCFBC /* NetworkTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkTools.swift; sourceTree = "<group>"; };
 		CACDCEE41F7DDE4700B2EDAA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		CADBED091F7DED0900B06B84 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		D0D2F5A5E6D2815FB67070FD /* Pods-Traffic_sys_Swift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Traffic_sys_Swift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Traffic_sys_Swift/Pods-Traffic_sys_Swift.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -176,6 +178,7 @@
 		CA48F0CA1F7DD112008BCFBC /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				CADBED091F7DED0900B06B84 /* UserInfo.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -396,6 +399,7 @@
 				CACDCEF71F7DE0E500B2EDAA /* UIColor-Extension.swift in Sources */,
 				CACDCEF81F7DE0E500B2EDAA /* UINavigationBar-Extension.swift in Sources */,
 				CACDCEF91F7DE0E500B2EDAA /* Common.swift in Sources */,
+				CADBED0A1F7DED0900B06B84 /* UserInfo.swift in Sources */,
 				CACDCEFA1F7DE0E500B2EDAA /* NetworkTools.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

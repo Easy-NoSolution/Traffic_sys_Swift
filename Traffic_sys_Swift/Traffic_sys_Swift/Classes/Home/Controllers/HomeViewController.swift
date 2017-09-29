@@ -15,7 +15,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-//        title = "首页"
+        navigationItem.title = "首页"
         
         // Do any additional setup after loading the view.
     }

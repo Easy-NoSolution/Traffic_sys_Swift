@@ -15,7 +15,7 @@ class TabBarViewController: UITabBarController {
         super.viewDidLoad()
         
 //        1.设置属性
-//        tabBar.tintColor = UIColor.colorWithHex(hex: kBackGroundColor, alpha: 1)
+        tabBar.tintColor = UIColor.colorWithHex(hex: kBackGroundColor, alpha: 1)
 
 //        2.添加控制器
         setupChildViewController()

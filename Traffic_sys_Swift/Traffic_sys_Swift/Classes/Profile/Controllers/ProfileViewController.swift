@@ -13,7 +13,7 @@ class ProfileViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-//        navigationItem.title = "个人"
+        navigationItem.title = "个人"
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false

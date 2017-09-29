@@ -143,8 +143,8 @@ extension LoginViewController {
             }
             
 //            2.4.遍历微博对应的字典
-//            let userInfo = UserInfo(dict: responseDict["userInfo"] as! [String : Any])
-//            print(userInfo)
+            let userInfo = UserInfo(dict: responseDict["userInfo"] as! [String : Any])
+            print(userInfo)
             
 //            2.5.跳转到首页
             if (responseDict["result"]?.isEqual("success"))! {
