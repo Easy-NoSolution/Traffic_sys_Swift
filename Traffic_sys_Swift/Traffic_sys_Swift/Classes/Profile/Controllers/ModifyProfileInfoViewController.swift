@@ -1,21 +1,20 @@
 //
-//  ProfileViewController.swift
+//  ModifyProfileInfoViewController.swift
 //  Traffic_sys_Swift
 //
-//  Created by 易无解 on 28/09/2017.
+//  Created by 易无解 on 06/10/2017.
 //  Copyright © 2017 易无解. All rights reserved.
 //
 
 import UIKit
 
-class ProfileViewController: UITableViewController {
+class ModifyProfileInfoViewController: UITableViewController {
 
     // MARK: - 自定义属性
-    let titleData = ["电话号码：", "用户名：", "性别：", "出生日期："]
+    let titleData = ["用户名：", "性别：", "出生日期："]
     lazy var avatarImageView: UIImageView = UIImageView()
     
     // MARK: - 系统回调函数
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -26,7 +25,8 @@ class ProfileViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setupView()
+        
+        avatarImageView.image = UIImage(named: "changeImage")
     }
 
     override func didReceiveMemoryWarning() {
@@ -43,30 +43,7 @@ class ProfileViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 4
-    }
-
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 44
-    }
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = ProfileViewCell.cellWithTableView(tableView: tableView) as! ProfileViewCell
-
-        cell.titleLabel.text = titleData[indexPath.row]
-        
-        return cell
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 44
-    }
-    
-    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let logoutBtn = UIButton(type: .custom)
-        logoutBtn.setTitle("退出", for: .normal)
-        logoutBtn.backgroundColor = UIColor.red
-        logoutBtn.addTarget(self, action: #selector(logoutBtnClicked(_:)), for: .touchUpInside)
-        return logoutBtn
+        return 3
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -85,6 +62,20 @@ class ProfileViewController: UITableViewController {
         
         return headerView
     }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 44
+    }
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = ModifyProfileInfoViewCell.cellWithTableView(tableView: tableView) as! ModifyProfileInfoViewCell
+
+        cell.titleLabel.text = titleData[indexPath.row]
+
+        return cell
+    }
+    
+    
 
     /*
     // Override to support conditional editing of the table view.
@@ -134,38 +125,25 @@ class ProfileViewController: UITableViewController {
 }
 
 // MARK: - 设置UI界面
-extension ProfileViewController {
+extension ModifyProfileInfoViewController {
     
     func setupNavigationItem() {
 //        1.设置标题
-        navigationItem.title = "个人"
+        navigationItem.title = "修改个人信息"
         
-//        2.设置返回按钮
+//        2.设置背景颜色
         navigationController?.navigationBar.setColor(color: UIColor.clear)
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "返回", style: .plain, target: self, action: nil)
         
-//        3.修改信息
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "修改信息", style: .plain, target: self, action: #selector(modifyInfoBtnClicked(_:)))
-    }
-
-    func setupView() {
-        tableView.separatorStyle = .singleLine
-        avatarImageView.image = UIImage(named: "log")
+//        3.设置完成按钮
+//        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneBtnClicked(_:)))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "完成", style: .plain, target: self, action: #selector(doneBtnClicked(_:)))
     }
 }
 
 // MARK: - 事件监听函数
-extension ProfileViewController {
+extension ModifyProfileInfoViewController {
     
-    @objc func logoutBtnClicked(_ sender: Any) {
-        let chooseVc = ChooseLoginOrRegisterViewController()
-        UIApplication.shared.keyWindow?.rootViewController = chooseVc
-    }
-    
-    @objc func modifyInfoBtnClicked(_ sender: Any) {
-        let modifyInfoVc = ModifyProfileInfoViewController()
-        hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(modifyInfoVc, animated: true)
-        hidesBottomBarWhenPushed = false
+    @objc func doneBtnClicked(_ sender: Any) {
+        navigationController?.popViewController(animated: true)
     }
 }

@@ -10,14 +10,24 @@ import UIKit
 
 class HomeViewController: UIViewController {
 
+    // MARK: - 自定义属性
+    lazy var layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+    lazy var collectionView: UICollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+    let data = [["search1", "查询"], ["register", "登记"], ["log", "日志"]]
     
     // MARK: - 系统回调函数
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        view.backgroundColor = UIColor.colorWithHex(hex: kBackGroundColor, alpha: 1)
+        setupNavigationItem()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        navigationItem.title = "首页"
         
-        // Do any additional setup after loading the view.
+        setupView()
     }
 
     override func didReceiveMemoryWarning() {
@@ -41,4 +51,57 @@ class HomeViewController: UIViewController {
 // MARK: - 设置UI界面
 extension HomeViewController {
     
+    func setupNavigationItem() {
+//        1.设置标题
+        navigationItem.title = "主页"
+        
+//        2.设置下一个界面的返回按钮
+        navigationController?.navigationBar.setColor(color: UIColor.clear)
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "返回", style: .plain, target: self, action: nil)
+    }
+    
+    func setupView() {
+//        1.添加控制器
+        view.addSubview(collectionView)
+        
+//        2.设置frame
+        collectionView.snp.makeConstraints { (make) in
+            make.top.equalTo(64)
+            make.left.right.equalTo(0)
+            make.bottom.equalTo(-48)
+        }
+        
+//        3.设置属性
+        collectionView.register(HomeCollectionViewCell.self, forCellWithReuseIdentifier: kHomeCellIdentifier)
+        collectionView.backgroundColor = UIColor.clear
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        
+        layout.scrollDirection = .vertical
+        layout.minimumLineSpacing = 85.0
+        layout.minimumInteritemSpacing = 30.0
+        layout.itemSize = CGSize(width: 56, height: 85)
+        layout.sectionInset = UIEdgeInsetsMake(29, 34, 29, 34)
+        
+    }
+}
+
+// MARK: - UICollectionViewDataSource, UICollectionViewDelegate
+extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return data.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let collectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: kHomeCellIdentifier, for: indexPath) as! HomeCollectionViewCell
+        collectionViewCell.imageView.image = UIImage(named: data[indexPath.row][0])
+        collectionViewCell.titleLabel.text = data[indexPath.row][1]
+        return collectionViewCell
+    }
 }

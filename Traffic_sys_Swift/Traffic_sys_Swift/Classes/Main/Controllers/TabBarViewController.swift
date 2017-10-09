@@ -33,7 +33,7 @@ extension TabBarViewController {
     
     func setupChildViewController() {
 //        1.首页
-        addChildViewController(imageName: "tabbar_home", controller: HomeViewController(), title: "首页")
+        addChildViewController(imageName: "tabbar_home", controller: HomeViewController(), title: "主页")
         
 //        2.个人
         addChildViewController(imageName: "tabbar_profile", controller: ProfileViewController(), title: "个人")

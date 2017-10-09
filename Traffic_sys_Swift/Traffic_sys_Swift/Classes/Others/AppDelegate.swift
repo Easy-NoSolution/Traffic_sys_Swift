@@ -19,8 +19,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow(frame: UIScreen.main.bounds)
         
-        window?.rootViewController = TabBarViewController()
-//        window?.rootViewController = UINavigationController(rootViewController: ChooseLoginOrRegisterViewController())
+        if UserInfoViewModel.shareInstance.userInfo == nil {
+            window?.rootViewController = UINavigationController(rootViewController: ChooseLoginOrRegisterViewController())
+        } else {
+            window?.rootViewController = TabBarViewController()
+        }
+        
         window?.makeKeyAndVisible()
         return true
     }

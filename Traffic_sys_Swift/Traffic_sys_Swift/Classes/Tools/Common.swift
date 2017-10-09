@@ -16,3 +16,5 @@ let kForgetPwdTextColor: NSInteger = 0x777171
 let kTextColor: NSInteger = 0xebf1ec
 let kPlaceHolderColor: NSInteger = 0xd1d1d1
 
+// MARK: - cell Identifier
+let kHomeCellIdentifier = "CollectionViewCell"

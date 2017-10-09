@@ -8,7 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		99C382DF37D9DFFE2EE71FCE /* Pods_Traffic_sys_Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24323B859860D813BC295AAE /* Pods_Traffic_sys_Swift.framework */; };
+		CA12AE001F8B159D007A0FDA /* UserInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA12ADFF1F8B159D007A0FDA /* UserInfoViewModel.swift */; };
 		CA48F0B31F7DCAE9008BCFBC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA48F0B21F7DCAE9008BCFBC /* Assets.xcassets */; };
+		CA93A0521F7F44F700C43F03 /* HomeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA93A0511F7F44F700C43F03 /* HomeCollectionViewCell.swift */; };
+		CAC68E591F8753B0000F7CF5 /* ProfileViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC68E581F8753B0000F7CF5 /* ProfileViewCell.swift */; };
+		CAC68E5B1F87814A000F7CF5 /* ModifyProfileInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC68E5A1F87814A000F7CF5 /* ModifyProfileInfoViewController.swift */; };
+		CAC68E5D1F87853E000F7CF5 /* ModifyProfileInfoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC68E5C1F87853E000F7CF5 /* ModifyProfileInfoViewCell.swift */; };
 		CACDCEE51F7DDE4700B2EDAA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CACDCEE41F7DDE4700B2EDAA /* UIKit.framework */; };
 		CACDCEEC1F7DE0E500B2EDAA /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA48F0C01F7DD111008BCFBC /* HomeViewController.swift */; };
 		CACDCEED1F7DE0E500B2EDAA /* ChooseLoginOrRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA48F0C51F7DD111008BCFBC /* ChooseLoginOrRegisterViewController.swift */; };
@@ -29,6 +34,7 @@
 /* Begin PBXFileReference section */
 		24323B859860D813BC295AAE /* Pods_Traffic_sys_Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Traffic_sys_Swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A477C3810EB90B33EA8F8048 /* Pods-Traffic_sys_Swift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Traffic_sys_Swift.release.xcconfig"; path = "Pods/Target Support Files/Pods-Traffic_sys_Swift/Pods-Traffic_sys_Swift.release.xcconfig"; sourceTree = "<group>"; };
+		CA12ADFF1F8B159D007A0FDA /* UserInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoViewModel.swift; sourceTree = "<group>"; };
 		CA48F0A81F7DCAE9008BCFBC /* Traffic_sys_Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Traffic_sys_Swift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA48F0B21F7DCAE9008BCFBC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CA48F0C01F7DD111008BCFBC /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -45,6 +51,10 @@
 		CA48F0DA1F7DD112008BCFBC /* UINavigationBar-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationBar-Extension.swift"; sourceTree = "<group>"; };
 		CA48F0DB1F7DD112008BCFBC /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		CA48F0DD1F7DD112008BCFBC /* NetworkTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkTools.swift; sourceTree = "<group>"; };
+		CA93A0511F7F44F700C43F03 /* HomeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewCell.swift; sourceTree = "<group>"; };
+		CAC68E581F8753B0000F7CF5 /* ProfileViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewCell.swift; sourceTree = "<group>"; };
+		CAC68E5A1F87814A000F7CF5 /* ModifyProfileInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyProfileInfoViewController.swift; sourceTree = "<group>"; };
+		CAC68E5C1F87853E000F7CF5 /* ModifyProfileInfoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyProfileInfoViewCell.swift; sourceTree = "<group>"; };
 		CACDCEE41F7DDE4700B2EDAA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		CADBED091F7DED0900B06B84 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		D0D2F5A5E6D2815FB67070FD /* Pods-Traffic_sys_Swift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Traffic_sys_Swift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Traffic_sys_Swift/Pods-Traffic_sys_Swift.debug.xcconfig"; sourceTree = "<group>"; };
@@ -148,6 +158,7 @@
 		CA48F0C21F7DD111008BCFBC /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				CA93A0511F7F44F700C43F03 /* HomeCollectionViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -179,6 +190,7 @@
 			isa = PBXGroup;
 			children = (
 				CADBED091F7DED0900B06B84 /* UserInfo.swift */,
+				CA12ADFF1F8B159D007A0FDA /* UserInfoViewModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -221,6 +233,7 @@
 			isa = PBXGroup;
 			children = (
 				CA48F0D41F7DD112008BCFBC /* ProfileViewController.swift */,
+				CAC68E5A1F87814A000F7CF5 /* ModifyProfileInfoViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -235,6 +248,8 @@
 		CA48F0D61F7DD112008BCFBC /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				CAC68E581F8753B0000F7CF5 /* ProfileViewCell.swift */,
+				CAC68E5C1F87853E000F7CF5 /* ModifyProfileInfoViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -392,14 +407,19 @@
 				CACDCEEE1F7DE0E500B2EDAA /* ForgetPwdViewController.swift in Sources */,
 				CACDCEEF1F7DE0E500B2EDAA /* LoginViewController.swift in Sources */,
 				CACDCEF01F7DE0E500B2EDAA /* RegisterViewController.swift in Sources */,
+				CA93A0521F7F44F700C43F03 /* HomeCollectionViewCell.swift in Sources */,
 				CACDCEF11F7DE0E500B2EDAA /* TabBarViewController.swift in Sources */,
 				CACDCEF31F7DE0E500B2EDAA /* RegisterView.swift in Sources */,
 				CACDCEF41F7DE0E500B2EDAA /* AppDelegate.swift in Sources */,
 				CACDCEF61F7DE0E500B2EDAA /* ProfileViewController.swift in Sources */,
+				CAC68E5B1F87814A000F7CF5 /* ModifyProfileInfoViewController.swift in Sources */,
 				CACDCEF71F7DE0E500B2EDAA /* UIColor-Extension.swift in Sources */,
 				CACDCEF81F7DE0E500B2EDAA /* UINavigationBar-Extension.swift in Sources */,
+				CAC68E591F8753B0000F7CF5 /* ProfileViewCell.swift in Sources */,
+				CA12AE001F8B159D007A0FDA /* UserInfoViewModel.swift in Sources */,
 				CACDCEF91F7DE0E500B2EDAA /* Common.swift in Sources */,
 				CADBED0A1F7DED0900B06B84 /* UserInfo.swift in Sources */,
+				CAC68E5D1F87853E000F7CF5 /* ModifyProfileInfoViewCell.swift in Sources */,
 				CACDCEFA1F7DE0E500B2EDAA /* NetworkTools.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

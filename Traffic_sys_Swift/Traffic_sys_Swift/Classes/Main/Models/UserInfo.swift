@@ -8,8 +8,9 @@
 
 import UIKit
 
-class UserInfo: NSObject {
+class UserInfo: NSObject, NSCoding {
 
+    // MARK: - 自定义属性
     @objc var userId: String?                               //用户id
     @objc var username: String?                             //用户名
     @objc var userSex : NSInteger = 0                       //用户性别
@@ -27,5 +28,26 @@ class UserInfo: NSObject {
     
     override var description: String {
         return dictionaryWithValues(forKeys: ["userId", "username", "userSex", "userBirthday", "password"]).description
+    }
+    
+    // MARK: - 归档和解档
+//    归档
+    required init?(coder aDecoder: NSCoder) {
+        userId = aDecoder.decodeObject(forKey: "userId") as? String
+        username = aDecoder.decodeObject(forKey: "username") as? String
+        userSex = aDecoder.decodeInteger(forKey: "userSex")
+        userBirthday = aDecoder.decodeObject(forKey: "userBirthday") as? String
+        userAvatar = aDecoder.decodeObject(forKey: "userAvatar") as? String
+        password = aDecoder.decodeObject(forKey: "password") as? String
+    }
+    
+//    解档
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(userId, forKey: "userId")
+        aCoder.encode(username, forKey: "username")
+        aCoder.encode(userSex, forKey: "userSex")
+        aCoder.encode(userBirthday, forKey: "userBirthday")
+        aCoder.encode(userAvatar, forKey: "userAvatar")
+        aCoder.encode(password, forKey: "password")
     }
 }
