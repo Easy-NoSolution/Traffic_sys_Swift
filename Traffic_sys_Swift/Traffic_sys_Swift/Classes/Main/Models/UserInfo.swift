@@ -14,8 +14,8 @@ class UserInfo: NSObject, NSCoding {
     @objc var userId: String?                               //用户id
     @objc var username: String?                             //用户名
     @objc var userSex : NSInteger = 0                       //用户性别
-    @objc var userBirthday: String?                         //用户出生日期
-    @objc var userAvatar: String?                           //用户头像URL
+    @objc var userBirthday: TimeInterval = 0.0              //用户出生日期
+    @objc var userAvatar: String?                           //用户头像URLStr
     @objc var password: String?                             //用户密码
     
     init(dict: [String : Any]) {
@@ -27,7 +27,7 @@ class UserInfo: NSObject, NSCoding {
     override func setValue(_ value: Any?, forUndefinedKey key: String) {}
     
     override var description: String {
-        return dictionaryWithValues(forKeys: ["userId", "username", "userSex", "userBirthday", "password"]).description
+        return dictionaryWithValues(forKeys: ["userId", "username", "userSex", "userBirthday", "userAvatar", "password"]).description
     }
     
     // MARK: - 归档和解档
@@ -36,7 +36,7 @@ class UserInfo: NSObject, NSCoding {
         userId = aDecoder.decodeObject(forKey: "userId") as? String
         username = aDecoder.decodeObject(forKey: "username") as? String
         userSex = aDecoder.decodeInteger(forKey: "userSex")
-        userBirthday = aDecoder.decodeObject(forKey: "userBirthday") as? String
+        userBirthday = aDecoder.decodeDouble(forKey: "userBirthday")
         userAvatar = aDecoder.decodeObject(forKey: "userAvatar") as? String
         password = aDecoder.decodeObject(forKey: "password") as? String
     }

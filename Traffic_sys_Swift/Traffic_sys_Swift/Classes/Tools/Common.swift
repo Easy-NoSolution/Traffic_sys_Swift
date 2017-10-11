@@ -6,7 +6,7 @@
 //  Copyright © 2017 易无解. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 // MARK: - 背景颜色
 let kBackGroundColor: NSInteger = 0x54afc4
@@ -18,3 +18,7 @@ let kPlaceHolderColor: NSInteger = 0xd1d1d1
 
 // MARK: - cell Identifier
 let kHomeCellIdentifier = "CollectionViewCell"
+
+// MARK: - 当前窗口大小
+let kWindowWidth = UIScreen.main.bounds.width
+let kWindowHeight = UIScreen.main.bounds.height

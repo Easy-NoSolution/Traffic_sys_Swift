@@ -144,13 +144,14 @@ extension LoginViewController {
             
 //            2.4.遍历微博对应的字典
             let userInfo = UserInfo(dict: responseDict["userInfo"] as! [String : Any])
+            print(userInfo)
             
 //            2.5.将数据保存到沙盒
-            NSKeyedArchiver.archiveRootObject(userInfo, toFile: UserInfoViewModel.shareInstance.userInfoPath)
+            NSKeyedArchiver.archiveRootObject(userInfo, toFile: UserInfoViewModel.userInfoPath)
             
-//            2.6.将用户信息设置到单例对象中
+//            2.6.将userInfo保存到单例中
             UserInfoViewModel.shareInstance.userInfo = userInfo
-            print(NSHomeDirectory())
+            
 //            2.7.跳转到首页
             if (responseDict["result"]?.isEqual("success"))! {
                 let tabBarVc = TabBarViewController()

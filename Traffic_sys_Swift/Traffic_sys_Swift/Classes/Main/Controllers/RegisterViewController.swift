@@ -18,6 +18,7 @@ class RegisterViewController: UIViewController {
     lazy var sexView: RegisterView = RegisterView()
     lazy var birthdayView: RegisterView = RegisterView()
     lazy var avatarBtn = UIButton(type: UIButtonType.custom)
+    lazy var datePicker: UIDatePicker = UIDatePicker()
 
     // MARK: - 系统回调函数
     
@@ -137,6 +138,16 @@ extension RegisterViewController {
         sexView.sexSelector.isHidden = false
         
         birthdayView.titleLabel.text = "出生日期："
+        datePicker.datePickerMode = .date
+        datePicker.locale = Locale(identifier: "zh_Hans_CN")
+        birthdayView.valueTextField.inputView = datePicker
+        let accessoryView = UIToolbar(frame: CGRect(x: 0, y: 0, width: kWindowWidth, height: 44))
+        accessoryView.backgroundColor = UIColor.gray
+        let flexibleBtn = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let doneBtn = UIBarButtonItem(title: "完成", style: .plain, target: self, action: #selector(doneBtnClicked(_:)))
+        doneBtn.tintColor = UIColor.blue
+        accessoryView.items = [flexibleBtn, doneBtn]
+        birthdayView.valueTextField.inputAccessoryView = accessoryView
         
         avatarBtn.setBackgroundImage(UIImage(named: "addImage"), for: UIControlState.normal)
         avatarBtn.addTarget(self, action: #selector(avatarBtnClicked(_:)), for: .touchUpInside)
@@ -145,7 +156,16 @@ extension RegisterViewController {
 
 // MARK: - 事件监听函数
 extension RegisterViewController {
-     
+    
+    @objc func doneBtnClicked(_ sender: Any) {
+        let fmt = DateFormatter()
+        fmt.dateFormat = "yyyy年MM月dd日"
+        fmt.locale = Locale(identifier: "zh_Hans_CN")
+        birthdayView.valueTextField.text = fmt.string(from: datePicker.date)
+        
+        view.endEditing(true)
+    }
+    
     @objc func registerBtnClicked(_ sender: Any) {
         print("click registerBtn")
         
@@ -153,15 +173,18 @@ extension RegisterViewController {
         let userId = phoneView.valueTextField.text!
         let username = usernameView.valueTextField.text!
         let userSex = sexView.sexSelector.selectedSegmentIndex as NSInteger
-        let userBirthday: Date? = Date(timeIntervalSinceNow: 10)
-        let userAvatar: UIImage? = UIImage(named: "addImage")
-//        let userAvatar: Data? = Data(count: 1)
-        
+        let userBirthday: Date? = datePicker.date
+        print(userBirthday!)
+        let fmt = DateFormatter()
+        fmt.dateFormat = "yyyy-MM-dd"
+        fmt.timeZone = TimeZone(identifier: "Asia/Shanghai")
+        fmt.locale = Locale(identifier: "zh_Hans_CN")
+        let userAvatar: UIImage? = avatarBtn.backgroundImage(for: .normal)
         let password = passwordView.valueTextField.text!
         
 //        2.发送请求
         if userAvatar != nil {
-            NetworkTools.shareInstance.registerUserInfo(userId: userId, username: username, userSex: userSex, userBirthday: userBirthday, userAvatar: userAvatar, password: password, finished: { (response, error) in
+            NetworkTools.shareInstance.registerUserInfo(userId: userId, username: username, userSex: userSex, userBirthday: fmt.string(from: userBirthday!), userAvatar: userAvatar, password: password, finished: { (response, error) in
 //                2.1.1.错误校验
                 if error != nil {
                     print(error ?? "No value")
@@ -178,7 +201,6 @@ extension RegisterViewController {
                     print("errorInfo:" + (responseDict["errorInfo"] as! String))
                     
 //                2.1.3.1.提示数据处理失败
-                    
                     return
                 }
                 
@@ -188,7 +210,7 @@ extension RegisterViewController {
                 }
             })
         } else {
-            NetworkTools.shareInstance.registerUserInfo(userId: userId, username: username, userSex: userSex, userBirthday: userBirthday, password: password, finished: { (response, error) in
+            NetworkTools.shareInstance.registerUserInfo(userId: userId, username: username, userSex: userSex, userBirthday: fmt.string(from: userBirthday!), password: password, finished: { (response, error) in
 //                2.2.1.错误校验
                 if error != nil {
                     print(error ?? "No value")
@@ -219,5 +241,36 @@ extension RegisterViewController {
     
     @objc func avatarBtnClicked(_ sender: Any) {
         
+//        1.判断照片源是否可用
+        if !UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+            return
+        }
+        
+//        2.创建照片选择控制器
+        let ipc = UIImagePickerController()
+        
+//        3.设置照片源
+        ipc.sourceType = .photoLibrary
+        
+//        4.设置代理
+        ipc.delegate = self
+        
+//        5.弹出控制器
+        present(ipc, animated: true, completion: nil)
+    }
+}
+
+// MARK: - UIImagePickerControllerDelegate, UINavigationControllerDelegate
+extension RegisterViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+//        1.获取选中的照片
+        let image = info[UIImagePickerControllerOriginalImage] as! UIImage
+        
+//        2.展示照片
+        avatarBtn.setBackgroundImage(image, for: .normal);
+        
+//        3.退出控制器
+        picker.dismiss(animated: true, completion: nil)
     }
 }

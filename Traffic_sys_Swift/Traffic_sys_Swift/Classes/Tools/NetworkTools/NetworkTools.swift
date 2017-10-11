@@ -45,19 +45,20 @@ extension NetworkTools {
 
 // MARK: - 注册用户
 extension NetworkTools {
-    func registerUserInfo(userId: String, username: String, userSex: NSInteger, userBirthday: Date?, password: String, finished: @escaping (_ response: [String : AnyObject]?, _ error: Error?) -> ()) {
+    func registerUserInfo(userId: String, username: String, userSex: NSInteger, userBirthday: String?, password: String, finished: @escaping (_ response: [String : AnyObject]?, _ error: Error?) -> ()) {
 //        1.获取请求的URLString
         let urlString = "http://39.108.237.44/traffic_sys/register.php"
-        print(urlString)
+        
 //        2.获取请求的参数
         guard let userBirthday = userBirthday else {
             return
         }
         
         let parameters = ["userId" : userId, "username" : username, "userSex" : userSex, "userBirthday" : userBirthday, "password" : password] as [String : AnyObject]
-        print(parameters)
+        
 //        3.发送网络请求
         request(methodType: .POST, urlString: urlString, parameters: parameters) { (response, error) in
+            
 //            3.1.获取请求的数据
             guard let responseDict = response as? [String : AnyObject] else {
                 finished(nil, error)
@@ -74,10 +75,9 @@ extension NetworkTools {
 
 extension NetworkTools {
 
-    func registerUserInfo(userId: String, username: String, userSex: NSInteger, userBirthday: Date?, userAvatar: UIImage?, password: String, finished: @escaping (_ response: [String : AnyObject]?, _ error: Error?) -> ()) {
+    func registerUserInfo(userId: String, username: String, userSex: NSInteger, userBirthday: String?, userAvatar: UIImage?, password: String, finished: @escaping (_ response: [String : AnyObject]?, _ error: Error?) -> ()) {
 //        1.获取请求的URLString
         let urlString = "http://39.108.237.44/traffic_sys/register.php"
-        print(urlString)
         
 //        2.获取请求的参数
         guard let userBirthday = userBirthday else {
@@ -87,10 +87,11 @@ extension NetworkTools {
             return
         }
         let parameters = ["userId" : userId, "username" : username, "userSex" : userSex, "userBirthday" : userBirthday, "userAvatar" : userAvatar, "password" : password] as [String : AnyObject]
-
+	
 //        3.发送网络请求
         post(urlString, parameters: parameters, constructingBodyWith: { (formData) in
-            if let userAvatarData = UIImagePNGRepresentation(userAvatar) {
+
+            if let userAvatarData = UIImageJPEGRepresentation(userAvatar, 0.5) {
                 formData.appendPart(withFileData: userAvatarData, name: "userAvatar", fileName: "userAvatar.png", mimeType: "image/png")
             }
         }, progress: nil, success: { (task, response) in
@@ -114,14 +115,12 @@ extension NetworkTools {
         
 //        1.获取请求的URLString
         let urlString = "http://39.108.237.44/traffic_sys/login.php"
-        print(urlString)
         
 //        2.获取请求的参数
         let parameters = ["userId" : userId, "password" : password] as [String : AnyObject]
         
 //        3.发送网络请求
         request(methodType: .POST, urlString: urlString, parameters: parameters) { (response, error) in
-            
 //            3.1.获取请求的数据
             guard let responseDict = response as? [String : AnyObject] else {
                 finished(nil, error)

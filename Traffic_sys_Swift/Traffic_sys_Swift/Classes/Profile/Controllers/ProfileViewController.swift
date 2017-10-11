@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import SDWebImage
 
 class ProfileViewController: UITableViewController {
 
     // MARK: - 自定义属性
     let titleData = ["电话号码：", "用户名：", "性别：", "出生日期："]
     lazy var avatarImageView: UIImageView = UIImageView()
+    let userInfo: UserInfo? = UserInfoViewModel.shareInstance.userInfo
     
     // MARK: - 系统回调函数
     
@@ -50,10 +52,26 @@ class ProfileViewController: UITableViewController {
         return 44
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+//        1.创建cell
         let cell = ProfileViewCell.cellWithTableView(tableView: tableView) as! ProfileViewCell
 
+//        2.添加数据
         cell.titleLabel.text = titleData[indexPath.row]
+        switch indexPath.row {
+        case 0:
+            cell.valueLabel.text = userInfo?.userId
+        case 1:
+            cell.valueLabel.text = userInfo?.username
+        case 2:
+            cell.valueLabel.text = UserInfoViewModel.shareInstance.userSex
+        case 3:
+            cell.valueLabel.text = UserInfoViewModel.shareInstance.userBithday
+        default:
+            cell.valueLabel.text = ""
+        }
         
+//        3.返回cell
         return cell
     }
     
@@ -150,7 +168,7 @@ extension ProfileViewController {
 
     func setupView() {
         tableView.separatorStyle = .singleLine
-        avatarImageView.image = UIImage(named: "log")
+        avatarImageView.sd_setImage(with: UserInfoViewModel.shareInstance.userAvatarUrl, placeholderImage: UIImage(named: "log"))
     }
 }
 
@@ -158,8 +176,10 @@ extension ProfileViewController {
 extension ProfileViewController {
     
     @objc func logoutBtnClicked(_ sender: Any) {
+        let fileManager: FileManager = FileManager()
+        try? fileManager.removeItem(atPath: UserInfoViewModel.userInfoPath)
         let chooseVc = ChooseLoginOrRegisterViewController()
-        UIApplication.shared.keyWindow?.rootViewController = chooseVc
+        UIApplication.shared.keyWindow?.rootViewController = UINavigationController(rootViewController: chooseVc)
     }
     
     @objc func modifyInfoBtnClicked(_ sender: Any) {

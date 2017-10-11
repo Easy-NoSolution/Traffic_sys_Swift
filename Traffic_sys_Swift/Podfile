@@ -6,6 +6,9 @@ target 'Traffic_sys_Swift' do
   use_frameworks!
 pod 'AFNetworking'
 pod 'SnapKit'
+pod 'SDWebImage'
+pod 'SVProgressHUD'
+pod 'MJRefresh'
 
   # Pods for Traffic_sys_Swift
 
