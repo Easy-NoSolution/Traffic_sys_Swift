@@ -76,14 +76,14 @@ extension ChooseLoginOrRegisterViewController {
         phoneLoginBtn.setTitle("手机号登录", for: .normal)
         phoneLoginBtn.setTitleColor(UIColor.white, for: .normal)
         phoneLoginBtn.backgroundColor = UIColor.colorWithHex(hex: kButtonHighlightBackgroundColor, alpha: 1)
-        phoneLoginBtn.layer.cornerRadius = 5
+        phoneLoginBtn.layer.cornerRadius = 8
         phoneLoginBtn.layer.masksToBounds = true
         phoneLoginBtn.addTarget(self, action: #selector(phoneLoginBtnClicked(_:)), for: .touchUpInside)
         
         registerBtn.setTitle("注册", for: .normal)
         registerBtn.setTitleColor(UIColor.colorWithHex(hex: kButtonHighlightBackgroundColor, alpha: 1), for: .normal)
         registerBtn.backgroundColor = UIColor.white
-        registerBtn.layer.cornerRadius = 5
+        registerBtn.layer.cornerRadius = 8
         registerBtn.layer.masksToBounds = true
         registerBtn.addTarget(self, action: #selector(registerBtnClicked(_:)), for: .touchUpInside)
     }

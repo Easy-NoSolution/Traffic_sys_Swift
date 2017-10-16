@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class UserInfoViewModel: NSObject {
 
@@ -30,6 +31,7 @@ class UserInfoViewModel: NSObject {
     }
     var userAvatarUrl: URL? {
         let urlStr = "http://39.108.237.44" + (userInfo?.userAvatar)!
+        SDImageCache.shared().removeImage(forKey: urlStr, withCompletion: nil) //清除之前的图片缓存
         return URL(string: urlStr);
     }
     

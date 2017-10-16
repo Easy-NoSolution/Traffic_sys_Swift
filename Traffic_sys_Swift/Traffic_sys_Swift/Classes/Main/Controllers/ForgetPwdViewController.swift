@@ -36,7 +36,9 @@ class ForgetPwdViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
     /*
     // MARK: - Navigation
 
@@ -93,22 +95,31 @@ extension ForgetPwdViewController {
         
 //        3.设置属性
         phoneView.titleLabel.text = "手机：+86"
+        NotificationCenter.default.addObserver(self, selector: #selector(textFieldTextDidChange(_:)), name: NSNotification.Name.UITextFieldTextDidChange, object: phoneView.valueTextField)
         
         passwordView.titleLabel.text = "新密码："
         passwordView.valueTextField.isSecureTextEntry = true
+        NotificationCenter.default.addObserver(self, selector: #selector(textFieldTextDidChange(_:)), name: NSNotification.Name.UITextFieldTextDidChange, object: passwordView.valueTextField)
         
         reinputPasswordView.titleLabel.text = "确认密码："
         reinputPasswordView.valueTextField.isSecureTextEntry = true
+        NotificationCenter.default.addObserver(self, selector: #selector(textFieldTextDidChange(_:)), name: NSNotification.Name.UITextFieldTextDidChange, object: reinputPasswordView.valueTextField)
         
         findPwdBtn.setTitle("重置密码", for: .normal)
         findPwdBtn.setTitleColor(UIColor.white, for: .normal)
-        findPwdBtn.backgroundColor = UIColor.colorWithHex(hex: kButtonNormalBackgroundColor, alpha: 1)
+        findPwdBtn.setBackgroundImage(UIImage(named: "ButtonDisnabledColor"), for: .disabled)
+        findPwdBtn.setBackgroundImage(UIImage(named: "ButtonEnabledColor"), for: .normal)
+        findPwdBtn.isEnabled = false
         findPwdBtn.addTarget(self, action: #selector(findPwdBtnClicked(_:)), for: .touchUpInside)
     }
 }
 
 // MARK: - 事件监听函数
 extension ForgetPwdViewController {
+    
+    @objc func textFieldTextDidChange(_ sender: Any) {
+        findPwdBtn.isEnabled = (phoneView.valueTextField.text?.count != 0 && passwordView.valueTextField.text?.count != 0 && reinputPasswordView.valueTextField.text?.count != 0)
+    }
     
     @objc func findPwdBtnClicked(_ sender: Any) {
 //        1.获取数据

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 class RegisterViewController: UIViewController {
     
@@ -167,14 +168,12 @@ extension RegisterViewController {
     }
     
     @objc func registerBtnClicked(_ sender: Any) {
-        print("click registerBtn")
         
 //        1.获取值
         let userId = phoneView.valueTextField.text!
         let username = usernameView.valueTextField.text!
         let userSex = sexView.sexSelector.selectedSegmentIndex as NSInteger
         let userBirthday: Date? = datePicker.date
-        print(userBirthday!)
         let fmt = DateFormatter()
         fmt.dateFormat = "yyyy-MM-dd"
         fmt.timeZone = TimeZone(identifier: "Asia/Shanghai")
@@ -182,56 +181,94 @@ extension RegisterViewController {
         let userAvatar: UIImage? = avatarBtn.backgroundImage(for: .normal)
         let password = passwordView.valueTextField.text!
         
-//        2.发送请求
+////        2.验证值
+//        2.1.手机号
+        if !RegexTool.isQualified(text: userId, pattern: "^1[3578]\\d{9}$") {
+            SVProgressHUD.setMinimumDismissTimeInterval(1)
+            SVProgressHUD.showError(withStatus: "手机号为空或者格式不正确")
+            return
+        }
+//        2.2.密码
+        if !RegexTool.isQualified(text: password, pattern: "^[a-zA-Z0-9]{6,16}+$") {
+            SVProgressHUD.setMinimumDismissTimeInterval(1)
+            SVProgressHUD.showError(withStatus: "密码为空或者格式不正确")
+            return
+        }
+
+        if reinputPasswordView.valueTextField.text! != password {
+            SVProgressHUD.setMinimumDismissTimeInterval(1)
+            SVProgressHUD.showError(withStatus: "两次输入的密码不同")
+            return
+        }
+//        2.3.用户名
+        if !RegexTool.isQualified(text: username, pattern: "^[\u{4E00}-\u{9FA5}]{2,8}$") && !RegexTool.isQualified(text: username, pattern: "^[a-zA-Z\\s]{2,8}$") {
+            SVProgressHUD.setMinimumDismissTimeInterval(1)
+            SVProgressHUD.showError(withStatus: "用户名为空或者格式不正确")
+            return
+        }
+//        2.3.出生日期
+        if fmt.string(from: userBirthday!).isEmpty {
+            SVProgressHUD.setMinimumDismissTimeInterval(1)
+            SVProgressHUD.showError(withStatus: "出生日期为空或者格式不正确")
+            return
+        }
+        
+//        3.发送请求
+        SVProgressHUD.showInfo(withStatus: "正在注册...")
         if userAvatar != nil {
             NetworkTools.shareInstance.registerUserInfo(userId: userId, username: username, userSex: userSex, userBirthday: fmt.string(from: userBirthday!), userAvatar: userAvatar, password: password, finished: { (response, error) in
-//                2.1.1.错误校验
+                SVProgressHUD.dismiss()
+//                3.1.1.错误校验
                 if error != nil {
                     print(error ?? "No value")
                     return
                 }
                 
-//                2.1.2.获取可选类型中的数据
+//                3.1.2.获取可选类型中的数据
                 guard let responseDict = response else {
                     return
                 }
                 
-//                2.1.3.判断数据处理是否成功
+//                3.1.3.判断数据处理是否成功
                 if (responseDict["result"]?.isEqual("failed"))! {
                     print("errorInfo:" + (responseDict["errorInfo"] as! String))
                     
-//                2.1.3.1.提示数据处理失败
+//                3.1.3.1.提示数据处理失败
+                    SVProgressHUD.setMinimumDismissTimeInterval(1)
+                    SVProgressHUD.showError(withStatus: responseDict["errorInfo"] as! String)
                     return
                 }
                 
-//                2.1.4.返回上一页
+//                3.1.4.返回上一页
                 if (responseDict["result"]?.isEqual("success"))! {
                     self.navigationController?.popViewController(animated: true)
                 }
             })
         } else {
             NetworkTools.shareInstance.registerUserInfo(userId: userId, username: username, userSex: userSex, userBirthday: fmt.string(from: userBirthday!), password: password, finished: { (response, error) in
-//                2.2.1.错误校验
+                SVProgressHUD.dismiss()
+//                3.2.1.错误校验
                 if error != nil {
                     print(error ?? "No value")
                     return
                 }
                 
-//                2.2.2.获取可选类型中的数据
+//                3.2.2.获取可选类型中的数据
                 guard let responseDict = response else {
                     return
                 }
                 
-//                2.2.3.判断数据处理是否成功
+//                3.2.3.判断数据处理是否成功
                 if (responseDict["result"]?.isEqual("failed"))! {
                     print("errorInfo:" + (responseDict["errorInfo"] as! String))
                     
-//                2.2.3.1.提示数据处理失败
-                    
+//                3.2.3.1.提示数据处理失败
+                    SVProgressHUD.setMinimumDismissTimeInterval(1)
+                    SVProgressHUD.showError(withStatus: responseDict["errorInfo"] as! String)
                     return
                 }
                 
-//                2.2.4.返回上一页
+//                3.2.4.返回上一页
                 if (responseDict["result"]?.isEqual("success"))! {
                     self.navigationController?.popViewController(animated: true)
                 }

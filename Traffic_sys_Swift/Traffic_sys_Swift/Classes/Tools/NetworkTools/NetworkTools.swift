@@ -86,12 +86,12 @@ extension NetworkTools {
         guard let userAvatar = userAvatar else {
             return
         }
-        let parameters = ["userId" : userId, "username" : username, "userSex" : userSex, "userBirthday" : userBirthday, "userAvatar" : userAvatar, "password" : password] as [String : AnyObject]
+        let parameters = ["userId" : userId, "username" : username, "userSex" : userSex, "userBirthday" : userBirthday, "password" : password] as [String : AnyObject]
 	
 //        3.发送网络请求
         post(urlString, parameters: parameters, constructingBodyWith: { (formData) in
 
-            if let userAvatarData = UIImageJPEGRepresentation(userAvatar, 0.5) {
+            if let userAvatarData = UIImageJPEGRepresentation(userAvatar, 0.1) {
                 formData.appendPart(withFileData: userAvatarData, name: "userAvatar", fileName: "userAvatar.png", mimeType: "image/png")
             }
         }, progress: nil, success: { (task, response) in
@@ -154,6 +154,44 @@ extension NetworkTools {
             
 //            3.2.将数据回调给外界控制器
             finished(responseDict, error)
+        }
+    }
+}
+
+// MARK: - 修改个人信息
+extension NetworkTools {
+    
+    func modifyUserInfo(userId: String, username: String, userSex: NSInteger, userBirthday: String?, userAvatar: UIImage?, finished: @escaping (_ response: [String : AnyObject]?, _ error: Error?) -> ()) {
+        
+//        1.获取url
+        let urlString = "http://39.108.237.44/traffic_sys/modifyUserInfo.php"
+        
+//        2.获取请求参数
+        guard let userBirthday = userBirthday else {
+            return
+        }
+        guard let userAvatar = userAvatar else {
+            return
+        }
+        let parameters = ["userId" : userId, "username" : username, "userSex" : userSex, "userBirthday" : userBirthday] as [String : AnyObject]
+        print("请求参数")
+        print(parameters)
+//        3.发送网络请求
+        post(urlString, parameters: parameters, constructingBodyWith: { (formData) in
+            if let userAvatarData = UIImageJPEGRepresentation(userAvatar, 0.1) {
+                formData.appendPart(withFileData: userAvatarData, name: "userAvatar", fileName: "userAvatar.png", mimeType: "image/png")
+            }
+        }, progress: nil, success: { (task, response) in
+//            1.获取请求的数据
+            guard let responseDict = response as? [String : AnyObject] else {
+                return
+            }
+            
+//            2.将请求结果回调给外界控制器
+            finished(responseDict, nil)
+        }) { (task, error) in
+//            1.将请求结果回调给外界控制器
+            finished(nil, error)
         }
     }
 }

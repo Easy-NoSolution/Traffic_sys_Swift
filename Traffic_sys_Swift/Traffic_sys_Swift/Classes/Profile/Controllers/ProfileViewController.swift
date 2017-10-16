@@ -8,13 +8,14 @@
 
 import UIKit
 import SDWebImage
+import MJRefresh
 
 class ProfileViewController: UITableViewController {
 
     // MARK: - 自定义属性
     let titleData = ["电话号码：", "用户名：", "性别：", "出生日期："]
-    lazy var avatarImageView: UIImageView = UIImageView()
-    let userInfo: UserInfo? = UserInfoViewModel.shareInstance.userInfo
+    var avatarImageView: UIImageView = UIImageView()
+    var userInfo: UserInfo? = UserInfoViewModel.shareInstance.userInfo
     
     // MARK: - 系统回调函数
     
@@ -28,7 +29,12 @@ class ProfileViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+//        1.设置主界面
         setupView()
+        
+        print(NSHomeDirectory())
+//        2.监听通知
+        setupNotifications()
     }
 
     override func didReceiveMemoryWarning() {
@@ -103,6 +109,11 @@ class ProfileViewController: UITableViewController {
         
         return headerView
     }
+    
+//    移除通知中心
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
 
     /*
     // Override to support conditional editing of the table view.
@@ -168,12 +179,30 @@ extension ProfileViewController {
 
     func setupView() {
         tableView.separatorStyle = .singleLine
-        avatarImageView.sd_setImage(with: UserInfoViewModel.shareInstance.userAvatarUrl, placeholderImage: UIImage(named: "log"))
+        avatarImageView.sd_setImage(with: UserInfoViewModel.shareInstance.userAvatarUrl, placeholderImage: UIImage(named: "avatar_default_big"))
+    }
+}
+
+// MARK: - 监听通知
+extension ProfileViewController {
+    
+    func setupNotifications() {
+        
+//        1.监听更新用户信息的通知
+        NotificationCenter.default.addObserver(self, selector: #selector(updateUserInfo(_:)), name: Notification.Name(rawValue: ModifyUserInfoNote), object: nil)
     }
 }
 
 // MARK: - 事件监听函数
 extension ProfileViewController {
+    
+    @objc func updateUserInfo(_ sender: Any) {
+        
+        userInfo = UserInfoViewModel.shareInstance.userInfo
+        avatarImageView.sd_setImage(with: UserInfoViewModel.shareInstance.userAvatarUrl)
+        avatarImageView.sd_setImage(with: UserInfoViewModel.shareInstance.userAvatarUrl, placeholderImage: UIImage(named: "avatar_default_big"))
+        tableView.reloadData()
+    }
     
     @objc func logoutBtnClicked(_ sender: Any) {
         let fileManager: FileManager = FileManager()

@@ -10,6 +10,7 @@
 		99C382DF37D9DFFE2EE71FCE /* Pods_Traffic_sys_Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24323B859860D813BC295AAE /* Pods_Traffic_sys_Swift.framework */; };
 		CA12AE001F8B159D007A0FDA /* UserInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA12ADFF1F8B159D007A0FDA /* UserInfoViewModel.swift */; };
 		CA48F0B31F7DCAE9008BCFBC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA48F0B21F7DCAE9008BCFBC /* Assets.xcassets */; };
+		CA4D29601F908E59005B74A1 /* RegexTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4D295F1F908E59005B74A1 /* RegexTool.swift */; };
 		CA93A0521F7F44F700C43F03 /* HomeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA93A0511F7F44F700C43F03 /* HomeCollectionViewCell.swift */; };
 		CAC68E591F8753B0000F7CF5 /* ProfileViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC68E581F8753B0000F7CF5 /* ProfileViewCell.swift */; };
 		CAC68E5B1F87814A000F7CF5 /* ModifyProfileInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC68E5A1F87814A000F7CF5 /* ModifyProfileInfoViewController.swift */; };
@@ -51,6 +52,7 @@
 		CA48F0DA1F7DD112008BCFBC /* UINavigationBar-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationBar-Extension.swift"; sourceTree = "<group>"; };
 		CA48F0DB1F7DD112008BCFBC /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		CA48F0DD1F7DD112008BCFBC /* NetworkTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkTools.swift; sourceTree = "<group>"; };
+		CA4D295F1F908E59005B74A1 /* RegexTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegexTool.swift; sourceTree = "<group>"; };
 		CA93A0511F7F44F700C43F03 /* HomeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewCell.swift; sourceTree = "<group>"; };
 		CAC68E581F8753B0000F7CF5 /* ProfileViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewCell.swift; sourceTree = "<group>"; };
 		CAC68E5A1F87814A000F7CF5 /* ModifyProfileInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyProfileInfoViewController.swift; sourceTree = "<group>"; };
@@ -277,6 +279,7 @@
 			isa = PBXGroup;
 			children = (
 				CA48F0DD1F7DD112008BCFBC /* NetworkTools.swift */,
+				CA4D295F1F908E59005B74A1 /* RegexTool.swift */,
 			);
 			path = NetworkTools;
 			sourceTree = "<group>";
@@ -405,6 +408,7 @@
 				CACDCEEC1F7DE0E500B2EDAA /* HomeViewController.swift in Sources */,
 				CACDCEED1F7DE0E500B2EDAA /* ChooseLoginOrRegisterViewController.swift in Sources */,
 				CACDCEEE1F7DE0E500B2EDAA /* ForgetPwdViewController.swift in Sources */,
+				CA4D29601F908E59005B74A1 /* RegexTool.swift in Sources */,
 				CACDCEEF1F7DE0E500B2EDAA /* LoginViewController.swift in Sources */,
 				CACDCEF01F7DE0E500B2EDAA /* RegisterViewController.swift in Sources */,
 				CA93A0521F7F44F700C43F03 /* HomeCollectionViewCell.swift in Sources */,

@@ -38,7 +38,9 @@ class LoginViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
     /*
     // MARK: - Navigation
 
@@ -96,13 +98,17 @@ extension LoginViewController {
         
 //        3.设置属性
         phoneView.titleLabel.text = "手机：+86"
+        NotificationCenter.default.addObserver(self, selector: #selector(textFieldTextDidChange(_:)), name: NSNotification.Name.UITextFieldTextDidChange, object: phoneView.valueTextField)
         
         passwordView.titleLabel.text = "密码："
         passwordView.valueTextField.isSecureTextEntry = true
+        NotificationCenter.default.addObserver(self, selector: #selector(textFieldTextDidChange(_:)), name: NSNotification.Name.UITextFieldTextDidChange, object: passwordView.valueTextField)
         
         loginBtn.setTitle("登录", for: .normal)
         loginBtn.setTitleColor(UIColor.white, for: .normal)
-        loginBtn.backgroundColor = UIColor.colorWithHex(hex: kButtonNormalBackgroundColor, alpha: 1)
+        loginBtn.setBackgroundImage(UIImage(named: "ButtonDisnabledColor"), for: .disabled)
+        loginBtn.setBackgroundImage(UIImage(named: "ButtonEnabledColor"), for: .normal)
+        loginBtn.isEnabled = false
         loginBtn.addTarget(self, action: #selector(loginBtnClicked(_:)), for: .touchUpInside)
         
         forgetPwdBtn.setTitle("忘记密码?", for: .normal)
@@ -113,6 +119,10 @@ extension LoginViewController {
 
 // MARK: - 事件监听函数
 extension LoginViewController {
+    
+    @objc func textFieldTextDidChange(_ sender: Any) {
+        loginBtn.isEnabled = (phoneView.valueTextField.text?.count != 0 && passwordView.valueTextField.text?.count != 0)
+    }
     
     @objc func loginBtnClicked(_ sender: Any) {
         

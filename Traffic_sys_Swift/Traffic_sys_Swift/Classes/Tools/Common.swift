@@ -22,3 +22,6 @@ let kHomeCellIdentifier = "CollectionViewCell"
 // MARK: - 当前窗口大小
 let kWindowWidth = UIScreen.main.bounds.width
 let kWindowHeight = UIScreen.main.bounds.height
+
+// MARK: - 用户数据更新数据通知常量
+let ModifyUserInfoNote = "ModifyUserInfoNote"

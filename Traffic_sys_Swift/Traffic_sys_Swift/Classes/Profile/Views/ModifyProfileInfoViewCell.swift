@@ -8,11 +8,18 @@
 
 import UIKit
 
+// MARK: - 面向协议开发
+protocol ModifyProfileInfoViewCellDelegate: NSObjectProtocol {
+    func sexValueChanged(_ sender: UISegmentedControl)
+}
+
 class ModifyProfileInfoViewCell: UITableViewCell {
 
     // MARK: - 自定义属性
-    var titleLabel: UILabel = UILabel()
-    var valueTextField: UITextField = UITextField()
+    lazy var titleLabel: UILabel = UILabel()
+    lazy var valueTextField: UITextField = UITextField()
+    lazy var sexSelector = UISegmentedControl()
+    var modifyProfileInfoViewCellDelegate: ModifyProfileInfoViewCellDelegate?
     
     // MARK: - 系统回调函数
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -62,6 +69,7 @@ extension ModifyProfileInfoViewCell {
 //        1.添加控件
         contentView.addSubview(titleLabel)
         contentView.addSubview(valueTextField)
+        contentView.addSubview(sexSelector)
         
 //        2.设置frame
         titleLabel.snp.makeConstraints { (make) in
@@ -76,6 +84,12 @@ extension ModifyProfileInfoViewCell {
             make.right.equalTo(-15)
             make.height.equalTo(20)
         }
+        sexSelector.snp.makeConstraints { (make) in
+            make.right.equalTo(-15)
+            make.height.equalTo(17)
+            make.centerY.equalTo(titleLabel.snp.centerY)
+            make.width.equalTo(70)
+        }
         
 //        3.设置属性
         titleLabel.textAlignment = .left
@@ -83,5 +97,26 @@ extension ModifyProfileInfoViewCell {
         
         valueTextField.textAlignment = .right
         valueTextField.font = UIFont.systemFont(ofSize: 15)
+        
+        sexSelector.insertSegment(withTitle: "男", at: 0, animated: false)
+        sexSelector.insertSegment(withTitle: "女", at: 1, animated: false)
+        sexSelector.selectedSegmentIndex = 0
+        sexSelector.isHidden = true
+        sexSelector.addTarget(self, action: #selector(sexSelectorValueChanged(_:)), for: .valueChanged)
+    }
+}
+
+// MARK: - 事件监听函数
+extension ModifyProfileInfoViewCell {
+    
+    @objc func sexSelectorValueChanged(_ sender: UISegmentedControl) {
+        
+//        0.nil校验
+        guard let modifyProfileInfoViewCellDelegate = modifyProfileInfoViewCellDelegate else {
+            return
+        }
+        
+//        2.向代理发送事件
+        modifyProfileInfoViewCellDelegate.sexValueChanged(sender)
     }
 }
