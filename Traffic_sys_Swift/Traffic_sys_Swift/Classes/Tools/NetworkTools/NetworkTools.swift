@@ -195,3 +195,52 @@ extension NetworkTools {
         }
     }
 }
+
+// MARK: - 登录和退出账户记录
+extension NetworkTools {
+    func addLoginAndLogoutLog(userId: String, loginDate: String?, logoutDate: String?, finished: @escaping (_ response: [String : AnyObject]?, _ error: Error?) -> ()) {
+        
+//        1.获取URL
+        let urlString = "http://39.108.237.44/traffic_sys/loginLog.php"
+        
+//        2.获取请求参数
+        let parameters = ["userId" : userId, "loginDate" : loginDate, "logoutDate" : logoutDate] as [String : AnyObject]
+        
+//        3.发送网络请求
+        request(methodType: .GET, urlString: urlString, parameters: parameters) { (response, error) in
+            
+//            1.获取请求的数据
+            guard let responseDict = response as? [String : AnyObject] else {
+                finished(nil, error)
+                return
+            }
+            
+//            2.将数据回调给外界的控制器
+            finished(responseDict, error)
+        }
+    }
+}
+
+// MARK: - 获取账户登录和退出记录
+extension NetworkTools {
+    
+    func loadLogs(userId: String, offset: NSInteger, rows: NSInteger, finished: @escaping (_ response: [String : AnyObject]?, _ error: Error?) -> ()) {
+//        1.获取URL
+        let urlString = "http://39.108.237.44/traffic_sys/logData.php"
+        
+//        2.获取参数
+        let parameters = ["userId" : userId, "offset" : offset, "rows" : rows] as [String : AnyObject]
+        
+//        3.发送网络请求
+        request(methodType: .GET, urlString: urlString, parameters: parameters) { (response, error) in
+            
+//            1.获取请求的数据
+            guard let responseDict = response as? [String : AnyObject] else {
+                finished(nil, error)
+                return
+            }
+//            2.将数据回调给外界的控制器
+            finished(responseDict, error)
+        }
+    }
+}

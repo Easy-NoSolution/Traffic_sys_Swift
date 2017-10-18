@@ -216,7 +216,7 @@ extension RegisterViewController {
 //        3.发送请求
         SVProgressHUD.showInfo(withStatus: "正在注册...")
         if userAvatar != nil {
-            NetworkTools.shareInstance.registerUserInfo(userId: userId, username: username, userSex: userSex, userBirthday: fmt.string(from: userBirthday!), userAvatar: userAvatar, password: password, finished: { (response, error) in
+            NetworkTools.shareInstance.registerUserInfo(userId: userId, username: username, userSex: userSex, userBirthday: fmt.string(from: userBirthday!), userAvatar: userAvatar, password: password, finished: {[weak self] (response, error) in
                 SVProgressHUD.dismiss()
 //                3.1.1.错误校验
                 if error != nil {
@@ -241,11 +241,11 @@ extension RegisterViewController {
                 
 //                3.1.4.返回上一页
                 if (responseDict["result"]?.isEqual("success"))! {
-                    self.navigationController?.popViewController(animated: true)
+                    self?.navigationController?.popViewController(animated: true)
                 }
             })
         } else {
-            NetworkTools.shareInstance.registerUserInfo(userId: userId, username: username, userSex: userSex, userBirthday: fmt.string(from: userBirthday!), password: password, finished: { (response, error) in
+            NetworkTools.shareInstance.registerUserInfo(userId: userId, username: username, userSex: userSex, userBirthday: fmt.string(from: userBirthday!), password: password, finished: {[weak self] (response, error) in
                 SVProgressHUD.dismiss()
 //                3.2.1.错误校验
                 if error != nil {
@@ -270,7 +270,7 @@ extension RegisterViewController {
                 
 //                3.2.4.返回上一页
                 if (responseDict["result"]?.isEqual("success"))! {
-                    self.navigationController?.popViewController(animated: true)
+                    self?.navigationController?.popViewController(animated: true)
                 }
             })
         }

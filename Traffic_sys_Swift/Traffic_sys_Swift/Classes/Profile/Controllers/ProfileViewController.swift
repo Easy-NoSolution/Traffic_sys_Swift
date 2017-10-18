@@ -13,7 +13,7 @@ import MJRefresh
 class ProfileViewController: UITableViewController {
 
     // MARK: - 自定义属性
-    let titleData = ["电话号码：", "用户名：", "性别：", "出生日期："]
+    let titles: Array<String> = ["电话号码", "用户名", "性别", "出生日期"]
     var avatarImageView: UIImageView = UIImageView()
     var userInfo: UserInfo? = UserInfoViewModel.shareInstance.userInfo
     
@@ -63,7 +63,7 @@ class ProfileViewController: UITableViewController {
         let cell = ProfileViewCell.cellWithTableView(tableView: tableView) as! ProfileViewCell
 
 //        2.添加数据
-        cell.titleLabel.text = titleData[indexPath.row]
+        cell.titleLabel.text = titles[indexPath.row] + "："
         switch indexPath.row {
         case 0:
             cell.valueLabel.text = userInfo?.userId
@@ -205,10 +205,42 @@ extension ProfileViewController {
     }
     
     @objc func logoutBtnClicked(_ sender: Any) {
-        let fileManager: FileManager = FileManager()
-        try? fileManager.removeItem(atPath: UserInfoViewModel.userInfoPath)
-        let chooseVc = ChooseLoginOrRegisterViewController()
-        UIApplication.shared.keyWindow?.rootViewController = UINavigationController(rootViewController: chooseVc)
+        
+//        1.添加退出记录
+        let userId: String = (UserInfoViewModel.shareInstance.userInfo?.userId)!
+        let logoutDate: Date = Date()
+        let fmt: DateFormatter = DateFormatter()
+        fmt.dateFormat = "yyyy-MM-dd hh:mm:ss"
+        fmt.timeZone = TimeZone(identifier: "Asia/Shanghai")
+        fmt.locale = Locale(identifier: "zh_Hans_CN")
+        NetworkTools.shareInstance.addLoginAndLogoutLog(userId: userId, loginDate: nil, logoutDate: fmt.string(from: logoutDate), finished: {[weak self] (response, error) in
+            
+//          1.1.校验错误
+            if error != nil {
+                print(error ?? "error")
+                return
+            }
+            
+//          1.2.获取可选类型中的数据
+            guard let responseDict = response else {
+                return
+            }
+            
+//          1.3.判断数据处理是否成功
+            if (responseDict["result"]?.isEqual("failed"))! {
+                print("errorInfo:" + (responseDict["errorInfo"] as! String))
+                
+                //          1.3.1.提示数据处理失败
+                
+                return
+            }
+            
+//            1.4.切换控制器
+            let fileManager: FileManager = FileManager()
+            try? fileManager.removeItem(atPath: UserInfoViewModel.userInfoPath)
+            let chooseVc = ChooseLoginOrRegisterViewController()
+            UIApplication.shared.keyWindow?.rootViewController = UINavigationController(rootViewController: chooseVc)
+        })
     }
     
     @objc func modifyInfoBtnClicked(_ sender: Any) {

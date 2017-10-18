@@ -131,7 +131,7 @@ extension LoginViewController {
         let password = passwordView.valueTextField.text!
         
 //        2.发送请求
-        NetworkTools.shareInstance.login(userId: userId, password: password) { (response, error) in
+        NetworkTools.shareInstance.login(userId: userId, password: password) {[weak self] (response, error) in
 //            2.1.错误校验
             if error != nil {
                 print(error ?? "error")
@@ -154,7 +154,6 @@ extension LoginViewController {
             
 //            2.4.遍历微博对应的字典
             let userInfo = UserInfo(dict: responseDict["userInfo"] as! [String : Any])
-            print(userInfo)
             
 //            2.5.将数据保存到沙盒
             NSKeyedArchiver.archiveRootObject(userInfo, toFile: UserInfoViewModel.userInfoPath)
@@ -164,8 +163,39 @@ extension LoginViewController {
             
 //            2.7.跳转到首页
             if (responseDict["result"]?.isEqual("success"))! {
-                let tabBarVc = TabBarViewController()
-                UIApplication.shared.keyWindow?.rootViewController = tabBarVc
+//                2.7.1.添加登录记录
+                let userId: String = userInfo.userId!
+                let loginDate: Date = Date()
+                let fmt: DateFormatter = DateFormatter()
+                fmt.dateFormat = "yyyy-MM-dd hh:mm:ss"
+                fmt.timeZone = TimeZone(identifier: "Asia/Shanghai")
+                fmt.locale = Locale(identifier: "zh_Hans_CN")
+                NetworkTools.shareInstance.addLoginAndLogoutLog(userId: userId, loginDate: fmt.string(from: loginDate), logoutDate: nil, finished: {[weak self] (response, error) in
+                    
+//                    2.7.1.1.校验错误
+                    if error != nil {
+                        print(error ?? "error")
+                        return
+                    }
+                    
+//                    2.7.1.2.2.获取可选类型中的数据
+                    guard let responseDict = response else {
+                        return
+                    }
+                    
+                    
+//                    2.7.1.3.3.判断数据处理是否成功
+                    if (responseDict["result"]?.isEqual("failed"))! {
+                        print("errorInfo:" + (responseDict["errorInfo"] as! String))
+                        
+//                      2.7.1.3.3.1.提示数据处理失败
+                        
+                        return
+                    }
+                    
+                    let tabBarVc = TabBarViewController()
+                    UIApplication.shared.keyWindow?.rootViewController = tabBarVc
+                })
             }
         }
     }

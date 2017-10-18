@@ -13,7 +13,7 @@ class ModifyProfileInfoViewController: UITableViewController {
 
     // MARK: - 自定义属性
     let userInfo: UserInfo? = UserInfoViewModel.shareInstance.userInfo
-    let titleData = ["用户名：", "性别：", "出生日期："]
+    let titles: Array<String> = ["用户名", "性别", "出生日期"]
     lazy var tableViewCellsData = Dictionary<NSInteger, AnyObject>()
     lazy var userAvatarBtn: UIButton = UIButton(type: .custom)
     lazy var userSex: NSInteger = 0
@@ -31,8 +31,6 @@ class ModifyProfileInfoViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        print(tableViewCellsData)
         
         userAvatarBtn.setBackgroundImage(UIImage(named: "changeImage"), for: .normal)
     }
@@ -79,13 +77,14 @@ class ModifyProfileInfoViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = ModifyProfileInfoViewCell.cellWithTableView(tableView: tableView) as! ModifyProfileInfoViewCell
         
-        cell.titleLabel.text = titleData[indexPath.row]
+        cell.titleLabel.text = titles[indexPath.row] + "："
         
         if indexPath.row == 1 {
             cell.sexSelector.isHidden = false
             cell.modifyProfileInfoViewCellDelegate = self
             cell.valueTextField.isHidden = true
         } else {
+            cell.valueTextField.placeholder = "请输入" + titles[indexPath.row]
             cell.sexSelector.isHidden = true
             cell.valueTextField.isHidden = false
         }
@@ -121,7 +120,9 @@ class ModifyProfileInfoViewController: UITableViewController {
         return cell
     }
     
-    
+    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return UIView()
+    }
 
     /*
     // Override to support conditional editing of the table view.
@@ -227,7 +228,7 @@ extension ModifyProfileInfoViewController {
         }
         
 //        3.发送网络请求
-        NetworkTools.shareInstance.modifyUserInfo(userId: userId, username: username, userSex: userSex, userBirthday: fmt.string(from: userBirthday!), userAvatar: userAvatar) { (response, error) in
+        NetworkTools.shareInstance.modifyUserInfo(userId: userId, username: username, userSex: userSex, userBirthday: fmt.string(from: userBirthday!), userAvatar: userAvatar) {[weak self] (response, error) in
             
 //            3.1.校验nil值
             if error != nil {
@@ -264,7 +265,7 @@ extension ModifyProfileInfoViewController {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: ModifyUserInfoNote), object: nil)
             
 //            3.8.返回上一级控制器
-            self.navigationController?.popViewController(animated: true)
+            self?.navigationController?.popViewController(animated: true)
         }
     }
     

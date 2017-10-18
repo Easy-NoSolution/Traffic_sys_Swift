@@ -104,4 +104,27 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
         collectionViewCell.titleLabel.text = data[indexPath.row][1]
         return collectionViewCell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        switch indexPath.row {
+        case 0:
+            pushViewController(viewController: SearchViewController())
+        case 1:
+            pushViewController(viewController: CheckInViewController())
+        case 2:
+            pushViewController(viewController: LogsViewController())
+        default:
+            break
+        }
+    }
+}
+
+// MARK: - 自定义函数
+extension HomeViewController {
+    
+    func pushViewController(viewController: UIViewController) {
+        hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(viewController, animated: true)
+        hidesBottomBarWhenPushed = false
+    }
 }

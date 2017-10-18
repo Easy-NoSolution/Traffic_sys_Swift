@@ -8,13 +8,39 @@
 
 /* Begin PBXBuildFile section */
 		99C382DF37D9DFFE2EE71FCE /* Pods_Traffic_sys_Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24323B859860D813BC295AAE /* Pods_Traffic_sys_Swift.framework */; };
+		CA0793B31F9599E400D752E6 /* UIButton-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0793B21F9599E400D752E6 /* UIButton-Extension.swift */; };
+		CA0793B51F95A8CC00D752E6 /* CarInfoCheckInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0793B41F95A8CC00D752E6 /* CarInfoCheckInViewController.swift */; };
+		CA0793B71F95A8E900D752E6 /* CarOwnerInfoCheckInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0793B61F95A8E900D752E6 /* CarOwnerInfoCheckInViewController.swift */; };
+		CA0793B91F95A92100D752E6 /* LawBreakerInfoCheckInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0793B81F95A92000D752E6 /* LawBreakerInfoCheckInViewController.swift */; };
+		CA0793BB1F95A95A00D752E6 /* CarInfoSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0793BA1F95A95A00D752E6 /* CarInfoSearchViewController.swift */; };
+		CA0793BD1F95A97C00D752E6 /* CarOwnerInfoSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0793BC1F95A97B00D752E6 /* CarOwnerInfoSearchViewController.swift */; };
+		CA0793BF1F95A99F00D752E6 /* LawBreakerInfoSearchByICViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0793BE1F95A99F00D752E6 /* LawBreakerInfoSearchByICViewController.swift */; };
+		CA0793C11F95A9CF00D752E6 /* LawBreakerInfoSearchByCarIdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0793C01F95A9CF00D752E6 /* LawBreakerInfoSearchByCarIdViewController.swift */; };
+		CA0793C31F95A9F100D752E6 /* LawBreakerInfoSearchByCarOwnerNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0793C21F95A9F100D752E6 /* LawBreakerInfoSearchByCarOwnerNameViewController.swift */; };
+		CA0793C51F95B0C400D752E6 /* HomeViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0793C41F95B0C400D752E6 /* HomeViewCell.swift */; };
+		CA0793C71F95B18F00D752E6 /* CarInfoCheckInViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0793C61F95B18F00D752E6 /* CarInfoCheckInViewCell.swift */; };
+		CA0793CB1F95B42E00D752E6 /* CarOwnerInfoCheckInViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0793CA1F95B42E00D752E6 /* CarOwnerInfoCheckInViewCell.swift */; };
+		CA0793CD1F95B45C00D752E6 /* LawBreakerInfoCheckInViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0793CC1F95B45C00D752E6 /* LawBreakerInfoCheckInViewCell.swift */; };
+		CA0793CF1F95B49C00D752E6 /* CarInfoSearchViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0793CE1F95B49C00D752E6 /* CarInfoSearchViewCell.swift */; };
+		CA0793D11F95B4BC00D752E6 /* CarOwnerInfoSearchViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0793D01F95B4BC00D752E6 /* CarOwnerInfoSearchViewCell.swift */; };
+		CA0793D31F95B4DC00D752E6 /* LawBreakerInfoSearchByICViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0793D21F95B4DC00D752E6 /* LawBreakerInfoSearchByICViewCell.swift */; };
+		CA0793D51F95B4F800D752E6 /* LawBreakerInfoSearchByCarIdViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0793D41F95B4F800D752E6 /* LawBreakerInfoSearchByCarIdViewCell.swift */; };
+		CA0793D71F95B52B00D752E6 /* LawBreakerInfoSearchByCarOwnerNameViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0793D61F95B52B00D752E6 /* LawBreakerInfoSearchByCarOwnerNameViewCell.swift */; };
 		CA12AE001F8B159D007A0FDA /* UserInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA12ADFF1F8B159D007A0FDA /* UserInfoViewModel.swift */; };
 		CA48F0B31F7DCAE9008BCFBC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA48F0B21F7DCAE9008BCFBC /* Assets.xcassets */; };
 		CA4D29601F908E59005B74A1 /* RegexTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4D295F1F908E59005B74A1 /* RegexTool.swift */; };
+		CA4D29621F948A8B005B74A1 /* LogsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4D29611F948A8B005B74A1 /* LogsViewController.swift */; };
+		CA4D29641F948AC3005B74A1 /* CheckInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4D29631F948AC3005B74A1 /* CheckInViewController.swift */; };
+		CA4D29661F948AD3005B74A1 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4D29651F948AD3005B74A1 /* SearchViewController.swift */; };
+		CA4D296A1F948D09005B74A1 /* LogsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4D29691F948D09005B74A1 /* LogsViewCell.swift */; };
 		CA93A0521F7F44F700C43F03 /* HomeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA93A0511F7F44F700C43F03 /* HomeCollectionViewCell.swift */; };
+		CA9A17421F96467B0046F0A3 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9A17411F96467B0046F0A3 /* TextView.swift */; };
+		CABDCBB41F94D759000E5451 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABDCBB31F94D759000E5451 /* Log.swift */; };
+		CABDCBB61F950851000E5451 /* LogViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABDCBB51F950851000E5451 /* LogViewModel.swift */; };
 		CAC68E591F8753B0000F7CF5 /* ProfileViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC68E581F8753B0000F7CF5 /* ProfileViewCell.swift */; };
 		CAC68E5B1F87814A000F7CF5 /* ModifyProfileInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC68E5A1F87814A000F7CF5 /* ModifyProfileInfoViewController.swift */; };
 		CAC68E5D1F87853E000F7CF5 /* ModifyProfileInfoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC68E5C1F87853E000F7CF5 /* ModifyProfileInfoViewCell.swift */; };
+		CAC6D8A01F96E100003EE9D9 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC6D89F1F96E100003EE9D9 /* TextField.swift */; };
 		CACDCEE51F7DDE4700B2EDAA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CACDCEE41F7DDE4700B2EDAA /* UIKit.framework */; };
 		CACDCEEC1F7DE0E500B2EDAA /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA48F0C01F7DD111008BCFBC /* HomeViewController.swift */; };
 		CACDCEED1F7DE0E500B2EDAA /* ChooseLoginOrRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA48F0C51F7DD111008BCFBC /* ChooseLoginOrRegisterViewController.swift */; };
@@ -35,6 +61,24 @@
 /* Begin PBXFileReference section */
 		24323B859860D813BC295AAE /* Pods_Traffic_sys_Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Traffic_sys_Swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A477C3810EB90B33EA8F8048 /* Pods-Traffic_sys_Swift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Traffic_sys_Swift.release.xcconfig"; path = "Pods/Target Support Files/Pods-Traffic_sys_Swift/Pods-Traffic_sys_Swift.release.xcconfig"; sourceTree = "<group>"; };
+		CA0793B21F9599E400D752E6 /* UIButton-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton-Extension.swift"; sourceTree = "<group>"; };
+		CA0793B41F95A8CC00D752E6 /* CarInfoCheckInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarInfoCheckInViewController.swift; sourceTree = "<group>"; };
+		CA0793B61F95A8E900D752E6 /* CarOwnerInfoCheckInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarOwnerInfoCheckInViewController.swift; sourceTree = "<group>"; };
+		CA0793B81F95A92000D752E6 /* LawBreakerInfoCheckInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawBreakerInfoCheckInViewController.swift; sourceTree = "<group>"; };
+		CA0793BA1F95A95A00D752E6 /* CarInfoSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarInfoSearchViewController.swift; sourceTree = "<group>"; };
+		CA0793BC1F95A97B00D752E6 /* CarOwnerInfoSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarOwnerInfoSearchViewController.swift; sourceTree = "<group>"; };
+		CA0793BE1F95A99F00D752E6 /* LawBreakerInfoSearchByICViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawBreakerInfoSearchByICViewController.swift; sourceTree = "<group>"; };
+		CA0793C01F95A9CF00D752E6 /* LawBreakerInfoSearchByCarIdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawBreakerInfoSearchByCarIdViewController.swift; sourceTree = "<group>"; };
+		CA0793C21F95A9F100D752E6 /* LawBreakerInfoSearchByCarOwnerNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawBreakerInfoSearchByCarOwnerNameViewController.swift; sourceTree = "<group>"; };
+		CA0793C41F95B0C400D752E6 /* HomeViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewCell.swift; sourceTree = "<group>"; };
+		CA0793C61F95B18F00D752E6 /* CarInfoCheckInViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarInfoCheckInViewCell.swift; sourceTree = "<group>"; };
+		CA0793CA1F95B42E00D752E6 /* CarOwnerInfoCheckInViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarOwnerInfoCheckInViewCell.swift; sourceTree = "<group>"; };
+		CA0793CC1F95B45C00D752E6 /* LawBreakerInfoCheckInViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawBreakerInfoCheckInViewCell.swift; sourceTree = "<group>"; };
+		CA0793CE1F95B49C00D752E6 /* CarInfoSearchViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarInfoSearchViewCell.swift; sourceTree = "<group>"; };
+		CA0793D01F95B4BC00D752E6 /* CarOwnerInfoSearchViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarOwnerInfoSearchViewCell.swift; sourceTree = "<group>"; };
+		CA0793D21F95B4DC00D752E6 /* LawBreakerInfoSearchByICViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawBreakerInfoSearchByICViewCell.swift; sourceTree = "<group>"; };
+		CA0793D41F95B4F800D752E6 /* LawBreakerInfoSearchByCarIdViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawBreakerInfoSearchByCarIdViewCell.swift; sourceTree = "<group>"; };
+		CA0793D61F95B52B00D752E6 /* LawBreakerInfoSearchByCarOwnerNameViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawBreakerInfoSearchByCarOwnerNameViewCell.swift; sourceTree = "<group>"; };
 		CA12ADFF1F8B159D007A0FDA /* UserInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoViewModel.swift; sourceTree = "<group>"; };
 		CA48F0A81F7DCAE9008BCFBC /* Traffic_sys_Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Traffic_sys_Swift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA48F0B21F7DCAE9008BCFBC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -53,10 +97,18 @@
 		CA48F0DB1F7DD112008BCFBC /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		CA48F0DD1F7DD112008BCFBC /* NetworkTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkTools.swift; sourceTree = "<group>"; };
 		CA4D295F1F908E59005B74A1 /* RegexTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegexTool.swift; sourceTree = "<group>"; };
+		CA4D29611F948A8B005B74A1 /* LogsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogsViewController.swift; sourceTree = "<group>"; };
+		CA4D29631F948AC3005B74A1 /* CheckInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInViewController.swift; sourceTree = "<group>"; };
+		CA4D29651F948AD3005B74A1 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		CA4D29691F948D09005B74A1 /* LogsViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogsViewCell.swift; sourceTree = "<group>"; };
 		CA93A0511F7F44F700C43F03 /* HomeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewCell.swift; sourceTree = "<group>"; };
+		CA9A17411F96467B0046F0A3 /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
+		CABDCBB31F94D759000E5451 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
+		CABDCBB51F950851000E5451 /* LogViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogViewModel.swift; sourceTree = "<group>"; };
 		CAC68E581F8753B0000F7CF5 /* ProfileViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewCell.swift; sourceTree = "<group>"; };
 		CAC68E5A1F87814A000F7CF5 /* ModifyProfileInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyProfileInfoViewController.swift; sourceTree = "<group>"; };
 		CAC68E5C1F87853E000F7CF5 /* ModifyProfileInfoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyProfileInfoViewCell.swift; sourceTree = "<group>"; };
+		CAC6D89F1F96E100003EE9D9 /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		CACDCEE41F7DDE4700B2EDAA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		CADBED091F7DED0900B06B84 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		D0D2F5A5E6D2815FB67070FD /* Pods-Traffic_sys_Swift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Traffic_sys_Swift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Traffic_sys_Swift/Pods-Traffic_sys_Swift.debug.xcconfig"; sourceTree = "<group>"; };
@@ -146,6 +198,17 @@
 			isa = PBXGroup;
 			children = (
 				CA48F0C01F7DD111008BCFBC /* HomeViewController.swift */,
+				CA4D29611F948A8B005B74A1 /* LogsViewController.swift */,
+				CA4D29631F948AC3005B74A1 /* CheckInViewController.swift */,
+				CA0793B41F95A8CC00D752E6 /* CarInfoCheckInViewController.swift */,
+				CA0793B61F95A8E900D752E6 /* CarOwnerInfoCheckInViewController.swift */,
+				CA0793B81F95A92000D752E6 /* LawBreakerInfoCheckInViewController.swift */,
+				CA4D29651F948AD3005B74A1 /* SearchViewController.swift */,
+				CA0793BA1F95A95A00D752E6 /* CarInfoSearchViewController.swift */,
+				CA0793BC1F95A97B00D752E6 /* CarOwnerInfoSearchViewController.swift */,
+				CA0793BE1F95A99F00D752E6 /* LawBreakerInfoSearchByICViewController.swift */,
+				CA0793C01F95A9CF00D752E6 /* LawBreakerInfoSearchByCarIdViewController.swift */,
+				CA0793C21F95A9F100D752E6 /* LawBreakerInfoSearchByCarOwnerNameViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -153,6 +216,8 @@
 		CA48F0C11F7DD111008BCFBC /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				CABDCBB31F94D759000E5451 /* Log.swift */,
+				CABDCBB51F950851000E5451 /* LogViewModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -161,6 +226,18 @@
 			isa = PBXGroup;
 			children = (
 				CA93A0511F7F44F700C43F03 /* HomeCollectionViewCell.swift */,
+				CA0793C41F95B0C400D752E6 /* HomeViewCell.swift */,
+				CA4D29691F948D09005B74A1 /* LogsViewCell.swift */,
+				CA0793C61F95B18F00D752E6 /* CarInfoCheckInViewCell.swift */,
+				CA0793CA1F95B42E00D752E6 /* CarOwnerInfoCheckInViewCell.swift */,
+				CA0793CC1F95B45C00D752E6 /* LawBreakerInfoCheckInViewCell.swift */,
+				CA0793CE1F95B49C00D752E6 /* CarInfoSearchViewCell.swift */,
+				CA0793D01F95B4BC00D752E6 /* CarOwnerInfoSearchViewCell.swift */,
+				CA0793D21F95B4DC00D752E6 /* LawBreakerInfoSearchByICViewCell.swift */,
+				CA0793D41F95B4F800D752E6 /* LawBreakerInfoSearchByCarIdViewCell.swift */,
+				CA0793D61F95B52B00D752E6 /* LawBreakerInfoSearchByCarOwnerNameViewCell.swift */,
+				CA9A17411F96467B0046F0A3 /* TextView.swift */,
+				CAC6D89F1F96E100003EE9D9 /* TextField.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -271,6 +348,7 @@
 			children = (
 				CA48F0D91F7DD112008BCFBC /* UIColor-Extension.swift */,
 				CA48F0DA1F7DD112008BCFBC /* UINavigationBar-Extension.swift */,
+				CA0793B21F9599E400D752E6 /* UIButton-Extension.swift */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -406,24 +484,50 @@
 			buildActionMask = 2147483647;
 			files = (
 				CACDCEEC1F7DE0E500B2EDAA /* HomeViewController.swift in Sources */,
+				CA0793D51F95B4F800D752E6 /* LawBreakerInfoSearchByCarIdViewCell.swift in Sources */,
 				CACDCEED1F7DE0E500B2EDAA /* ChooseLoginOrRegisterViewController.swift in Sources */,
 				CACDCEEE1F7DE0E500B2EDAA /* ForgetPwdViewController.swift in Sources */,
+				CA0793BD1F95A97C00D752E6 /* CarOwnerInfoSearchViewController.swift in Sources */,
 				CA4D29601F908E59005B74A1 /* RegexTool.swift in Sources */,
 				CACDCEEF1F7DE0E500B2EDAA /* LoginViewController.swift in Sources */,
 				CACDCEF01F7DE0E500B2EDAA /* RegisterViewController.swift in Sources */,
+				CA0793BB1F95A95A00D752E6 /* CarInfoSearchViewController.swift in Sources */,
 				CA93A0521F7F44F700C43F03 /* HomeCollectionViewCell.swift in Sources */,
+				CA0793CF1F95B49C00D752E6 /* CarInfoSearchViewCell.swift in Sources */,
+				CA0793CD1F95B45C00D752E6 /* LawBreakerInfoCheckInViewCell.swift in Sources */,
+				CA0793CB1F95B42E00D752E6 /* CarOwnerInfoCheckInViewCell.swift in Sources */,
+				CABDCBB41F94D759000E5451 /* Log.swift in Sources */,
+				CA0793BF1F95A99F00D752E6 /* LawBreakerInfoSearchByICViewController.swift in Sources */,
 				CACDCEF11F7DE0E500B2EDAA /* TabBarViewController.swift in Sources */,
 				CACDCEF31F7DE0E500B2EDAA /* RegisterView.swift in Sources */,
+				CA0793B91F95A92100D752E6 /* LawBreakerInfoCheckInViewController.swift in Sources */,
 				CACDCEF41F7DE0E500B2EDAA /* AppDelegate.swift in Sources */,
 				CACDCEF61F7DE0E500B2EDAA /* ProfileViewController.swift in Sources */,
+				CA0793D31F95B4DC00D752E6 /* LawBreakerInfoSearchByICViewCell.swift in Sources */,
+				CA4D29621F948A8B005B74A1 /* LogsViewController.swift in Sources */,
+				CA0793C51F95B0C400D752E6 /* HomeViewCell.swift in Sources */,
 				CAC68E5B1F87814A000F7CF5 /* ModifyProfileInfoViewController.swift in Sources */,
+				CA9A17421F96467B0046F0A3 /* TextView.swift in Sources */,
+				CAC6D8A01F96E100003EE9D9 /* TextField.swift in Sources */,
+				CA4D296A1F948D09005B74A1 /* LogsViewCell.swift in Sources */,
+				CABDCBB61F950851000E5451 /* LogViewModel.swift in Sources */,
+				CA0793C71F95B18F00D752E6 /* CarInfoCheckInViewCell.swift in Sources */,
+				CA4D29661F948AD3005B74A1 /* SearchViewController.swift in Sources */,
+				CA0793D11F95B4BC00D752E6 /* CarOwnerInfoSearchViewCell.swift in Sources */,
+				CA0793D71F95B52B00D752E6 /* LawBreakerInfoSearchByCarOwnerNameViewCell.swift in Sources */,
 				CACDCEF71F7DE0E500B2EDAA /* UIColor-Extension.swift in Sources */,
 				CACDCEF81F7DE0E500B2EDAA /* UINavigationBar-Extension.swift in Sources */,
+				CA0793B31F9599E400D752E6 /* UIButton-Extension.swift in Sources */,
 				CAC68E591F8753B0000F7CF5 /* ProfileViewCell.swift in Sources */,
 				CA12AE001F8B159D007A0FDA /* UserInfoViewModel.swift in Sources */,
 				CACDCEF91F7DE0E500B2EDAA /* Common.swift in Sources */,
+				CA0793B51F95A8CC00D752E6 /* CarInfoCheckInViewController.swift in Sources */,
 				CADBED0A1F7DED0900B06B84 /* UserInfo.swift in Sources */,
+				CA0793C11F95A9CF00D752E6 /* LawBreakerInfoSearchByCarIdViewController.swift in Sources */,
+				CA0793C31F95A9F100D752E6 /* LawBreakerInfoSearchByCarOwnerNameViewController.swift in Sources */,
 				CAC68E5D1F87853E000F7CF5 /* ModifyProfileInfoViewCell.swift in Sources */,
+				CA4D29641F948AC3005B74A1 /* CheckInViewController.swift in Sources */,
+				CA0793B71F95A8E900D752E6 /* CarOwnerInfoCheckInViewController.swift in Sources */,
 				CACDCEFA1F7DE0E500B2EDAA /* NetworkTools.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

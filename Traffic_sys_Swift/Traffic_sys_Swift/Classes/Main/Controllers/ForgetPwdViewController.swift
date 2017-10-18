@@ -127,7 +127,7 @@ extension ForgetPwdViewController {
         let password = passwordView.valueTextField.text!
         
 //        2.发送网络请求
-        NetworkTools.shareInstance.modifyPassword(userId: userId, password: password) { (response, error) in
+        NetworkTools.shareInstance.modifyPassword(userId: userId, password: password) {[weak self] (response, error) in
 //            2.1.校验错误
             if error != nil {
                 print(error ?? "error")
@@ -150,7 +150,7 @@ extension ForgetPwdViewController {
             
 //            2.4.返回上一页
             if (responseDict["result"]?.isEqual("success"))! {
-                self.navigationController?.popViewController(animated: true)
+                self?.navigationController?.popViewController(animated: true)
             }
         }
     }

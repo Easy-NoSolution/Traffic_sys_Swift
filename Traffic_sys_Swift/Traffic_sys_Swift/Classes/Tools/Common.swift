@@ -14,7 +14,10 @@ let kButtonHighlightBackgroundColor: NSInteger = 0x34b144
 let kButtonNormalBackgroundColor: NSInteger = 0xd1d1d1
 let kForgetPwdTextColor: NSInteger = 0x777171
 let kTextColor: NSInteger = 0xebf1ec
+let kTextNormalColor: NSInteger = 0x8f8e94
 let kPlaceHolderColor: NSInteger = 0xd1d1d1
+let kLawBreakerBtnBackGroundColor = 0xd0021b
+
 
 // MARK: - cell Identifier
 let kHomeCellIdentifier = "CollectionViewCell"
