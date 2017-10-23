@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 class LoginViewController: UIViewController {
     
@@ -98,10 +99,12 @@ extension LoginViewController {
         
 //        3.设置属性
         phoneView.titleLabel.text = "手机：+86"
+        phoneView.valueTextField.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(textFieldTextDidChange(_:)), name: NSNotification.Name.UITextFieldTextDidChange, object: phoneView.valueTextField)
         
         passwordView.titleLabel.text = "密码："
         passwordView.valueTextField.isSecureTextEntry = true
+        passwordView.valueTextField.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(textFieldTextDidChange(_:)), name: NSNotification.Name.UITextFieldTextDidChange, object: passwordView.valueTextField)
         
         loginBtn.setTitle("登录", for: .normal)
@@ -131,7 +134,9 @@ extension LoginViewController {
         let password = passwordView.valueTextField.text!
         
 //        2.发送请求
+        SVProgressHUD.showInfo(withStatus: "正在登录...")
         NetworkTools.shareInstance.login(userId: userId, password: password) {[weak self] (response, error) in
+            
 //            2.1.错误校验
             if error != nil {
                 print(error ?? "error")
@@ -145,14 +150,11 @@ extension LoginViewController {
             
 //            2.3.判断数据处理是否成功
             if (responseDict["result"]?.isEqual("failed"))! {
-                print("errorInfo:" + (responseDict["errorInfo"] as! String))
-                
-//                2.3.1.提示数据处理失败
                 
                 return
             }
             
-//            2.4.遍历微博对应的字典
+//            2.4.字典转模型
             let userInfo = UserInfo(dict: responseDict["userInfo"] as! [String : Any])
             
 //            2.5.将数据保存到沙盒
@@ -171,7 +173,7 @@ extension LoginViewController {
                 fmt.timeZone = TimeZone(identifier: "Asia/Shanghai")
                 fmt.locale = Locale(identifier: "zh_Hans_CN")
                 NetworkTools.shareInstance.addLoginAndLogoutLog(userId: userId, loginDate: fmt.string(from: loginDate), logoutDate: nil, finished: {[weak self] (response, error) in
-                    
+                    SVProgressHUD.dismiss()
 //                    2.7.1.1.校验错误
                     if error != nil {
                         print(error ?? "error")
@@ -186,9 +188,10 @@ extension LoginViewController {
                     
 //                    2.7.1.3.3.判断数据处理是否成功
                     if (responseDict["result"]?.isEqual("failed"))! {
-                        print("errorInfo:" + (responseDict["errorInfo"] as! String))
                         
 //                      2.7.1.3.3.1.提示数据处理失败
+                        SVProgressHUD.setMinimumDismissTimeInterval(1)
+                        SVProgressHUD.showError(withStatus: responseDict["errorInfo"] as! String)
                         
                         return
                     }
@@ -204,4 +207,14 @@ extension LoginViewController {
         let forgetPwdVc = ForgetPwdViewController()
         navigationController?.pushViewController(forgetPwdVc, animated: true)
     }
+}
+
+// MARK: - UITextFieldDelegate
+extension LoginViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        view.endEditing(true)
+        return true
+    }
+    
 }

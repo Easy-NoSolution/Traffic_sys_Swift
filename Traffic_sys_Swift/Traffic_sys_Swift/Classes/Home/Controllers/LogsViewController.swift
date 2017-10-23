@@ -8,6 +8,7 @@
 
 import UIKit
 import MJRefresh
+import SVProgressHUD
 
 class LogsViewController: UITableViewController {
 
@@ -154,7 +155,9 @@ extension LogsViewController {
         logsDataArray.removeAll()
         
 //        2.发送网络请求
+        SVProgressHUD.showInfo(withStatus: "正在获取登录日志...")
         NetworkTools.shareInstance.loadLogs(userId: userId, offset: offset, rows: rows) {[weak self] (response, error) in
+            SVProgressHUD.dismiss()
 //            2.1.校验参数
             if error != nil {
                 print(error ?? "error")
@@ -173,7 +176,17 @@ extension LogsViewController {
                 self?.logsDataArray.append(logVM)
             }
             
-//            2.4.更新数据
+//            2.4.判断数据处理是否成功
+            if (responseDict["result"]?.isEqual("failed"))! {
+                
+//                2.4.1.提示数据处理失败
+                SVProgressHUD.setMinimumDismissTimeInterval(1)
+                SVProgressHUD.showError(withStatus: responseDict["errorInfo"] as! String)
+                
+                return
+            }
+            
+//            2.5.更新数据
             self?.tableView.reloadData()
             self?.tableView.mj_header.endRefreshing()
         }

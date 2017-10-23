@@ -7,12 +7,15 @@
 //
 
 import UIKit
+import SVProgressHUD
 
-class LawBreakerInfoCheckInViewController: UITableViewController {
+class LawBreakerInfoCheckInViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     // MARK: - 自定义属性
     lazy var titles: Array<String> = ["车牌号", "身份证号码", "姓名", "电话号码"]
+    lazy var tableViewCellsData = Dictionary<NSInteger, AnyObject>()
     lazy var textView: TextView = TextView()
+    let tableView: UITableView = UITableView(frame: CGRect(x: 0, y: 0, width: kWindowWidth, height: kWindowHeight), style: .grouped)
     
     // MARK: - 系统回调函数
     
@@ -31,6 +34,8 @@ class LawBreakerInfoCheckInViewController: UITableViewController {
         textView.placeholderColor = UIColor.colorWithHex(hex: kPlaceHolderColor, alpha: 1.0)
         textView.placeholderFont = UIFont.systemFont(ofSize: 15.0)
         textView.font = UIFont.systemFont(ofSize: 15.0)
+        
+        setupView()
     }
 
     override func didReceiveMemoryWarning() {
@@ -40,33 +45,34 @@ class LawBreakerInfoCheckInViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return titles.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 //        1.创建cell
         let cell = LawBreakerInfoCheckInViewCell.checkInCellWithTableView(tableView: tableView) as! LawBreakerInfoCheckInViewCell
         
 //        2.设置属性
         cell.titleLabel.text = titles[indexPath.row] + "："
         cell.valueTextField.placeholder = "请输入" + titles[indexPath.row]
+        cell.valueTextField.delegate = self
         
 //        3.返回cell
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 500
     }
     
-    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         
         let footer = UIView()
         footer.backgroundColor = UIColor.colorWithHex(hex: kBackGroundColor, alpha: 1.0)
@@ -145,6 +151,11 @@ extension LawBreakerInfoCheckInViewController {
     
     func setupView() {
         
+//        1.设置tableView
+        view.addSubview(tableView)
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.backgroundColor = UIColor.colorWithHex(hex: kBackGroundColor, alpha: 1.0)
     }
 }
 
@@ -152,6 +163,85 @@ extension LawBreakerInfoCheckInViewController {
 extension LawBreakerInfoCheckInViewController {
     
     @objc func doneBtnClicked(_ sender: Any) {
-        print(1)
+//        1.获取参数
+        let carId: String = tableViewCellsData[0] as? String ?? ""
+        let carOwnerId: String = tableViewCellsData[1] as? String ?? ""
+        let lawbreakerInfo: String = textView.text
+        
+//        2.验证值
+//        2.1.车牌号
+        if !RegexTool.isQualified(text: carId, pattern: "^[\u{4e00}-\u{9fa5}]{1}[a-zA-Z]{1}[a-zA-Z_0-9]{4}[a-zA-Z_0-9_\u{4e00}-\u{9fa5}]$") {
+            SVProgressHUD.setMinimumDismissTimeInterval(1)
+            SVProgressHUD.showError(withStatus: "车牌号为空或者格式不正确")
+            return
+        }
+//        2.2.身份证号码
+        if !RegexTool.isQualified(text: carOwnerId, pattern: "^(\\d{14}|\\d{17})(\\d|[xX])$") {
+            SVProgressHUD.setMinimumDismissTimeInterval(1)
+            SVProgressHUD.showError(withStatus: "身份证号码为空或者格式不正确")
+            return
+        }
+//        2.3.违规原因
+        if textView.text.count == 0 {
+            SVProgressHUD.setMinimumDismissTimeInterval(1)
+            SVProgressHUD.showError(withStatus: "违规原因为空或者格式不正确")
+            return
+        }
+        
+//        3.发送网络请求
+        SVProgressHUD.showInfo(withStatus: "正在注册违规信息...")
+        NetworkTools.shareInstance.lawbreakerInfoCheckIn(carId: carId, carOwnerId: carOwnerId, lawbreakerInfo: lawbreakerInfo) {[weak self] (response, error) in
+            SVProgressHUD.dismiss()
+//            3.1.校验nil值
+            if error != nil {
+                print(error ?? "error")
+                return
+            }
+            
+//            3.2.获取可选类型中的数据
+            guard let responseDict = response else {
+                return
+            }
+            
+//            3.3.判断数据处理是否成功
+            if (responseDict["result"]?.isEqual("failed"))! {
+                
+//                3.3.1.提示数据处理失败
+                SVProgressHUD.setMinimumDismissTimeInterval(1)
+                SVProgressHUD.showError(withStatus: responseDict["errorInfo"] as! String)
+                
+                return
+            }
+            
+//            3.4.返回上一级控制器
+            self?.navigationController?.popViewController(animated: true)
+        }
     }
+}
+
+extension LawBreakerInfoCheckInViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        //        1.获取当前正在编辑的cell
+        let cell: LawBreakerInfoCheckInViewCell = textField.superview?.superview as! LawBreakerInfoCheckInViewCell
+        
+        //        2.获取当前cell的indexPath及值
+        guard let indexPath = tableView.indexPath(for: cell) else {
+            return true
+        }
+        guard let text = textField.text as NSString? else {
+            return true
+        }
+        
+        //        3.将值赋值到字典中
+        tableViewCellsData[indexPath.row] = text.replacingCharacters(in: range, with: string) as AnyObject
+        
+        return true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        view.endEditing(true)
+        return true
+    }
+    
 }

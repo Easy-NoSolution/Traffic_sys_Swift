@@ -174,8 +174,7 @@ extension NetworkTools {
             return
         }
         let parameters = ["userId" : userId, "username" : username, "userSex" : userSex, "userBirthday" : userBirthday] as [String : AnyObject]
-        print("请求参数")
-        print(parameters)
+        
 //        3.发送网络请求
         post(urlString, parameters: parameters, constructingBodyWith: { (formData) in
             if let userAvatarData = UIImageJPEGRepresentation(userAvatar, 0.1) {
@@ -244,3 +243,210 @@ extension NetworkTools {
         }
     }
 }
+
+// MARK: - 车辆信息登记
+extension NetworkTools {
+    func carInfoCheckIn(carId: String, carName: String, carColor: String, carOwnerId: String, finished: @escaping (_ response: [String : AnyObject]?, _ error: Error?) -> ()) {
+        
+//        1.获取URL
+        let urlString = "http://39.108.237.44/traffic_sys/carInfoCheckIn.php"
+        
+//        2.获取请求参数
+        let parameters = ["carId" : carId, "carName" : carName, "carColor" : carColor, "carOwnerId" : carOwnerId] as [String : AnyObject]
+        
+//        3.发送网络请求
+        request(methodType: .POST, urlString: urlString, parameters: parameters) { (response, error) in
+            
+//            1.获取请求的数据
+            guard let responseDict = response as? [String : AnyObject] else {
+                finished(nil, error)
+                return
+            }
+            
+//            2.将数据回调给外界的控制器
+            finished(responseDict, error)
+        }
+    }
+}
+
+// MARK: - 车主信息登记
+extension NetworkTools {
+    func carOwnerInfoCheckIn(carOwnerId: String, carOwnerName: String, carOwnerSex: NSInteger, carOwnerBirthday: String?, carOwnerAddress: String, carOwnerPhoneNumber: String, carOwnerAvatar: UIImage?, finished: @escaping (_ response: [String : AnyObject]?, _ error: Error?) -> ()) {
+        
+//        1.获取URL
+        let urlString = "http://39.108.237.44/traffic_sys/carOwnerInfoCheckIn.php"
+        
+//        2.获取请求参数
+        guard let carOwnerBirthday = carOwnerBirthday else {
+            return
+        }
+        guard let carOwnerAvatar = carOwnerAvatar else {
+            return
+        }
+        let parameters = ["carOwnerId" : carOwnerId, "carOwnerName" : carOwnerName, "carOwnerSex" : carOwnerSex, "carOwnerBirthday" : carOwnerBirthday, "carOwnerAddress" : carOwnerAddress, "carOwnerPhoneNumber" : carOwnerPhoneNumber] as [String : AnyObject]
+        
+//        3.发送网络请求
+        post(urlString, parameters: parameters, constructingBodyWith: { (formData) in
+            if let carOwnerAvatarData = UIImageJPEGRepresentation(carOwnerAvatar, 0.1) {
+                formData.appendPart(withFileData: carOwnerAvatarData, name: "carOwnerAvatar", fileName: "carOwnerAvatar.png", mimeType: "image/png")
+            }
+        }, progress: nil, success: { (task, response) in
+//            1.获取请求的数据
+            guard let responseDict = response as? [String : AnyObject] else {
+                return
+            }
+            
+//            2.将请求结果回调给外界控制器
+            finished(responseDict, nil)
+        }) { (task, error) in
+//            1.将请求结果回调给外界控制器
+            finished(nil, error)
+        }
+    }
+}
+
+// MARK: - 车辆违规信息登记
+extension NetworkTools {
+    func lawbreakerInfoCheckIn(carId: String, carOwnerId: String, lawbreakerInfo: String, finished: @escaping (_ response: [String : AnyObject]?, _ error: Error?) -> ()) {
+        
+//        1.获取URL
+        let urlString = "http://39.108.237.44/traffic_sys/lawbreakerInfoCheckIn.php"
+        
+//        2.获取请求参数
+        let parameters = ["carId" : carId, "carOwnerId" : carOwnerId, "lawbreakerInfo" : lawbreakerInfo] as [String : AnyObject]
+        
+//        3.发送网络请求
+        request(methodType: .POST, urlString: urlString, parameters: parameters) { (response, error) in
+            
+//            1.获取请求的数据
+            guard let responseDict = response as? [String : AnyObject] else {
+                finished(nil, error)
+                return
+            }
+            
+//            2.将数据回调给外界的控制器
+            finished(responseDict, error)
+        }
+    }
+}
+
+// MARK: - 获取车辆信息
+extension NetworkTools {
+    
+    func searchCarInfo(carId: String, finished: @escaping (_ response: [String : AnyObject]?, _ error: Error?) -> ()) {
+//        1.获取URL
+        let urlString = "http://39.108.237.44/traffic_sys/searchCarInfo.php"
+        
+//        2.获取参数
+        let parameters = ["carId" : carId] as [String : AnyObject]
+        
+//        3.发送网络请求
+        request(methodType: .GET, urlString: urlString, parameters: parameters) { (response, error) in
+            
+//            1.获取请求的数据
+            guard let responseDict = response as? [String : AnyObject] else {
+                finished(nil, error)
+                return
+            }
+//            2.将数据回调给外界的控制器
+            finished(responseDict, error)
+        }
+    }
+}
+
+// MARK: - 获取车主信息
+extension NetworkTools {
+    
+    func searchCarOwnerInfo(carOwnerId: String, finished: @escaping (_ response: [String : AnyObject]?, _ error: Error?) -> ()) {
+//        1.获取URL
+        let urlString = "http://39.108.237.44/traffic_sys/searchCarOwnerInfo.php"
+        
+//        2.获取参数
+        let parameters = ["carOwnerId" : carOwnerId] as [String : AnyObject]
+        
+//        3.发送网络请求
+        request(methodType: .GET, urlString: urlString, parameters: parameters) { (response, error) in
+            
+//            1.获取请求的数据
+            guard let responseDict = response as? [String : AnyObject] else {
+                finished(nil, error)
+                return
+            }
+//            2.将数据回调给外界的控制器
+            finished(responseDict, error)
+        }
+    }
+}
+
+// MARK: - 通过身份证号获取违规信息
+extension NetworkTools {
+    
+    func searchLawbreakerInfoByIC(carOwnerId: String, finished: @escaping (_ response: [String : AnyObject]?, _ error: Error?) -> ()) {
+//        1.获取URL
+        let urlString = "http://39.108.237.44/traffic_sys/searchLawbreakerInfoByIC.php"
+        
+//        2.获取参数
+        let parameters = ["carOwnerId" : carOwnerId] as [String : AnyObject]
+        
+//        3.发送网络请求
+        request(methodType: .GET, urlString: urlString, parameters: parameters) { (response, error) in
+            
+//            1.获取请求的数据
+            guard let responseDict = response as? [String : AnyObject] else {
+                finished(nil, error)
+                return
+            }
+//            2.将数据回调给外界的控制器
+            finished(responseDict, error)
+        }
+    }
+}
+
+// MARK: - 通过车牌号获取违规信息
+extension NetworkTools {
+    
+    func searchLawbreakerInfoByCarId(carId: String, finished: @escaping (_ response: [String : AnyObject]?, _ error: Error?) -> ()) {
+//        1.获取URL
+        let urlString = "http://39.108.237.44/traffic_sys/searchLawbreakerInfoByCarId.php"
+        
+//        2.获取参数
+        let parameters = ["carId" : carId] as [String : AnyObject]
+        
+//        3.发送网络请求
+        request(methodType: .GET, urlString: urlString, parameters: parameters) { (response, error) in
+            
+//            1.获取请求的数据
+            guard let responseDict = response as? [String : AnyObject] else {
+                finished(nil, error)
+                return
+            }
+//            2.将数据回调给外界的控制器
+            finished(responseDict, error)
+        }
+    }
+}
+
+// MARK: - 通过车牌号获取违规信息
+extension NetworkTools {
+    
+    func searchLawbreakerInfoByCarOwnerName(carOwnerName: String, finished: @escaping (_ response: [String : AnyObject]?, _ error: Error?) -> ()) {
+//        1.获取URL
+        let urlString = "http://39.108.237.44/traffic_sys/searchLawbreakerInfoByCarOwnerName.php"
+        
+//        2.获取参数
+        let parameters = ["carOwnerName" : carOwnerName] as [String : AnyObject]
+        
+//        3.发送网络请求
+        request(methodType: .GET, urlString: urlString, parameters: parameters) { (response, error) in
+            
+//            1.获取请求的数据
+            guard let responseDict = response as? [String : AnyObject] else {
+                finished(nil, error)
+                return
+            }
+//            2.将数据回调给外界的控制器
+            finished(responseDict, error)
+        }
+    }
+}
+

@@ -228,8 +228,9 @@ extension ModifyProfileInfoViewController {
         }
         
 //        3.发送网络请求
+        SVProgressHUD.showInfo(withStatus: "正在修改用户信息...")
         NetworkTools.shareInstance.modifyUserInfo(userId: userId, username: username, userSex: userSex, userBirthday: fmt.string(from: userBirthday!), userAvatar: userAvatar) {[weak self] (response, error) in
-            
+            SVProgressHUD.dismiss()
 //            3.1.校验nil值
             if error != nil {
                 print(error ?? "error")
@@ -243,9 +244,10 @@ extension ModifyProfileInfoViewController {
             
 //            3.3.判断数据更新是否成功
             if (responseDict["result"]?.isEqual("failed"))! {
-                print("errorInfo:" + (responseDict["errorInfo"] as! String))
                 
-                //                3.3.1.提示数据处理失败
+//                3.3.1.提示数据处理失败
+                SVProgressHUD.setMinimumDismissTimeInterval(1)
+                SVProgressHUD.showError(withStatus: responseDict["errorInfo"] as! String)
                 
                 return
             }
@@ -300,7 +302,7 @@ extension ModifyProfileInfoViewController {
     }
 }
 
-
+// MARK: - UITextFieldDelegate
 extension ModifyProfileInfoViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
 
@@ -318,6 +320,11 @@ extension ModifyProfileInfoViewController: UITextFieldDelegate {
 //        3.将值赋值到字典中
         tableViewCellsData[indexPath.row] = text.replacingCharacters(in: range, with: string) as AnyObject
 
+        return true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        view.endEditing(true)
         return true
     }
 }

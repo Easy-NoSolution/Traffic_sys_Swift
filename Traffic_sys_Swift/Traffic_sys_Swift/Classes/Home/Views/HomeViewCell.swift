@@ -8,6 +8,11 @@
 
 import UIKit
 
+// MARK: - 面向协议开发
+protocol HomeViewCellDelegate: NSObjectProtocol {
+    func sexValueChanged(_ sender: UISegmentedControl)
+}
+
 class HomeViewCell: UITableViewCell {
     
     // MARK: - 自定义属性
@@ -15,6 +20,7 @@ class HomeViewCell: UITableViewCell {
     var valueLabel: UILabel = UILabel()
     var valueTextField: UITextField = UITextField()
     lazy var sexSelector = UISegmentedControl()
+    var homeViewCellDelegate: HomeViewCellDelegate?
     
     // MARK: - 系统回调函数
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -106,6 +112,21 @@ extension HomeViewCell {
         sexSelector.insertSegment(withTitle: "男", at: 0, animated: false)
         sexSelector.insertSegment(withTitle: "女", at: 1, animated: false)
         sexSelector.selectedSegmentIndex = 0
+        sexSelector.addTarget(self, action: #selector(sexSelectorValueChanged(_:)), for: .valueChanged)
     }
 }
 
+// MARK: - 事件监听函数
+extension HomeViewCell {
+    
+    @objc func sexSelectorValueChanged(_ sender: UISegmentedControl) {
+        
+        //        0.nil校验
+        guard let homeViewCellDelegate = homeViewCellDelegate else {
+            return
+        }
+        
+        //        2.向代理发送事件
+        homeViewCellDelegate.sexValueChanged(sender)
+    }
+}

@@ -7,13 +7,15 @@
 //
 
 import UIKit
+import SVProgressHUD
 
-class LawBreakerInfoSearchByCarIdViewController: UITableViewController {
+class LawBreakerInfoSearchByCarIdViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     // MARK: - 自定义属性
     lazy var titles: Array<String> = ["车牌号", "身份证号码", "车主姓名", "性别", "电话号码"]
-    lazy var titleLabel: UILabel = UILabel()
-    lazy var textView: UITextView = UITextView()
+    let titleTextField = UITextField()
+    lazy var tableViewDatas: Array<LawbreakerInfoViewModel> = Array<LawbreakerInfoViewModel>()
+    let tableView: UITableView = UITableView(frame: CGRect(x: 0, y: 0, width: kWindowWidth, height: kWindowHeight), style: .grouped)
     
     // MARK: - 系统回调函数
     
@@ -27,11 +29,7 @@ class LawBreakerInfoSearchByCarIdViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        titleLabel.textAlignment = .center
-        titleLabel.text = "违规信息：\(1)"
-        
-        textView.text = "《人民的名义》是由李路执导、周梅森编剧的检察反腐电视剧，由陆毅、张丰毅、吴刚、许亚军、张志坚、柯蓝、胡静、张凯丽、赵子琪、白志迪、李建义、王丽云、高亚麟、丁海峰、冯雷、李光复、陶慧敏、张晞临等联袂主演，黄俊鹏、侯勇、许文广、徐光宇、沈晓海、侯天来、周浩东、黄品沅、刘伟、赵龙豪、李学政等特别出演。\n该剧以检察官侯亮平的调查行动为叙事主线，讲述了当代检察官维护公平正义和法制统一、查办贪腐案件的故事，于2017年3月28日在湖南卫视“金鹰独播剧场”播出[1]。\n2017年4月27日，该剧在GMIC X 2017非凡盛典上获得”互联网时代最具影响力影视作品“奖[2]  ；6月16日，吴刚和张志坚凭该剧荣获第23届上海电视节白玉兰最佳男配角奖。[3] "
-        textView.isEditable = false
+        setupView()
     }
     
     override func didReceiveMemoryWarning() {
@@ -41,36 +39,59 @@ class LawBreakerInfoSearchByCarIdViewController: UITableViewController {
     
     // MARK: - Table view data source
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        return tableViewDatas.count
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return titles.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 //        1.创建cell
         let cell = LawBreakerInfoSearchByCarIdViewCell.searchCellWithTableView(tableView: tableView) as! LawBreakerInfoSearchByCarIdViewCell
         
 //        2.设置属性
         cell.titleLabel.text = titles[indexPath.row] + "："
-        cell.valueLabel.text = "请输入" + titles[indexPath.row]
+        
+        if tableViewDatas.count > indexPath.section {
+            let lawbreakerVM = tableViewDatas[indexPath.section]
+            
+            switch indexPath.row {
+            case 0:
+                cell.valueLabel.text = lawbreakerVM.lawbreakerInfo?.carId
+            case 1:
+                cell.valueLabel.text = lawbreakerVM.lawbreakerInfo?.carOwnerId
+            case 2:
+                cell.valueLabel.text = lawbreakerVM.lawbreakerInfo?.carOwnerName
+            case 3:
+                cell.valueLabel.text = lawbreakerVM.carOwnerSex
+            case 4:
+                cell.valueLabel.text = lawbreakerVM.lawbreakerInfo?.carOwnerPhoneNumber
+            default:
+                break
+            }
+        }
         
 //        3.返回cell
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 22
     }
     
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = UIView()
         header.backgroundColor = UIColor.colorWithHex(hex: kBackGroundColor, alpha: 1.0)
         
+        let titleLabel: UILabel = UILabel()
+        titleLabel.textAlignment = .center
+        if tableViewDatas.count > section {
+            titleLabel.text = "违规信息：\(tableViewDatas[section].lawbreakerInfo?.lawbreakerInfoId ?? 1)"
+        }
         header.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { (make) in
             make.top.bottom.equalTo(0)
@@ -81,15 +102,20 @@ class LawBreakerInfoSearchByCarIdViewController: UITableViewController {
         return header
     }
     
-    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 251
     }
     
-    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         
         let footer = UIView()
         footer.backgroundColor = UIColor.colorWithHex(hex: kBackGroundColor, alpha: 1.0)
         
+        let textView: UITextView = UITextView()
+        textView.isEditable = false
+        if tableViewDatas.count > section {
+            textView.text = tableViewDatas[section].lawbreakerInfo?.lawbreakerInfo ?? ""
+        }
         footer.addSubview(textView)
         textView.snp.makeConstraints { (make) in
             make.top.equalTo(1)
@@ -153,8 +179,8 @@ extension LawBreakerInfoSearchByCarIdViewController {
     
     func setupNavigationItem() {
 //        1.设置标题
-        let titleTextField = UITextField()
         titleTextField.placeholder = "请输入车牌号"
+        titleTextField.delegate = self
         navigationItem.titleView = titleTextField
         
 //        2.设置navigationBar的颜色
@@ -166,6 +192,11 @@ extension LawBreakerInfoSearchByCarIdViewController {
     
     func setupView() {
         
+//        1.设置tableView
+        view.addSubview(tableView)
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.backgroundColor = UIColor.colorWithHex(hex: kBackGroundColor, alpha: 1.0)
     }
 }
 
@@ -173,10 +204,65 @@ extension LawBreakerInfoSearchByCarIdViewController {
 extension LawBreakerInfoSearchByCarIdViewController {
     
     @objc func searchBtnClicked(_ sender: Any) {
-        print(1)
+        
+//        1.获取参数
+        let carId: String = titleTextField.text ?? ""
+        
+//        2.验证值
+//        2.1.车牌号
+        if !RegexTool.isQualified(text: carId, pattern: "^[\u{4e00}-\u{9fa5}]{1}[a-zA-Z]{1}[a-zA-Z_0-9]{4}[a-zA-Z_0-9_\u{4e00}-\u{9fa5}]$") {
+            SVProgressHUD.setMinimumDismissTimeInterval(1)
+            SVProgressHUD.showError(withStatus: "车牌号为空或者格式不正确")
+            return
+        }
+        
+//        3.发送网络请求
+        SVProgressHUD.showInfo(withStatus: "正在获取违规信息...")
+        NetworkTools.shareInstance.searchLawbreakerInfoByCarId(carId: carId) {[weak self] (response, error) in
+            SVProgressHUD.dismiss()
+//            3.1.校验nil值
+            if error != nil {
+                print(error ?? "error")
+                return
+            }
+            
+//            3.2.获取可选类型中的数据
+            guard let responseDict = response else {
+                return
+            }
+            
+//            3.3.判断数据处理是否成功
+            if (responseDict["result"]?.isEqual("failed"))! {
+                
+//                3.3.1.提示数据处理失败
+                SVProgressHUD.setMinimumDismissTimeInterval(1)
+                SVProgressHUD.showError(withStatus: responseDict["errorInfo"] as! String)
+                
+                return
+            }
+            
+//            3.4.字典转模型
+            self?.tableViewDatas.removeAll()
+            for dic in responseDict["lawbreakerInfos"] as! Array<[String : Any]> {
+                
+                let lawbreakerInfo = LawbreakerInfo(dict: dic as [String : Any])
+                let lawbreakerInfoVM = LawbreakerInfoViewModel(lawbreakerInfo: lawbreakerInfo)
+                self?.tableViewDatas.append(lawbreakerInfoVM)
+            }
+            
+//            3.5.更新tableView的数据
+            self?.tableView.reloadData()
+        }
     }
     
-    @objc func userAvatarBtnClicked(_ sender: Any) {
-        print(2)
+}
+
+// MARK: - UITextFieldDelegate
+extension LawBreakerInfoSearchByCarIdViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        titleTextField.resignFirstResponder()
+        return true
     }
+    
 }

@@ -35,6 +35,11 @@
 		CA4D296A1F948D09005B74A1 /* LogsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4D29691F948D09005B74A1 /* LogsViewCell.swift */; };
 		CA93A0521F7F44F700C43F03 /* HomeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA93A0511F7F44F700C43F03 /* HomeCollectionViewCell.swift */; };
 		CA9A17421F96467B0046F0A3 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9A17411F96467B0046F0A3 /* TextView.swift */; };
+		CAA8218A1F999FD1007FB989 /* CarOwner.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA821891F999FD1007FB989 /* CarOwner.swift */; };
+		CAA8218C1F999FDD007FB989 /* Car.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA8218B1F999FDD007FB989 /* Car.swift */; };
+		CAA8218E1F99A123007FB989 /* CarOwnerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA8218D1F99A123007FB989 /* CarOwnerViewModel.swift */; };
+		CAA821921F99CDA8007FB989 /* LawbreakerInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA821911F99CDA8007FB989 /* LawbreakerInfo.swift */; };
+		CAA821941F99CED7007FB989 /* LawbreakerInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA821931F99CED7007FB989 /* LawbreakerInfoViewModel.swift */; };
 		CABDCBB41F94D759000E5451 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABDCBB31F94D759000E5451 /* Log.swift */; };
 		CABDCBB61F950851000E5451 /* LogViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABDCBB51F950851000E5451 /* LogViewModel.swift */; };
 		CAC68E591F8753B0000F7CF5 /* ProfileViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC68E581F8753B0000F7CF5 /* ProfileViewCell.swift */; };
@@ -103,6 +108,11 @@
 		CA4D29691F948D09005B74A1 /* LogsViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogsViewCell.swift; sourceTree = "<group>"; };
 		CA93A0511F7F44F700C43F03 /* HomeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewCell.swift; sourceTree = "<group>"; };
 		CA9A17411F96467B0046F0A3 /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
+		CAA821891F999FD1007FB989 /* CarOwner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarOwner.swift; sourceTree = "<group>"; };
+		CAA8218B1F999FDD007FB989 /* Car.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Car.swift; sourceTree = "<group>"; };
+		CAA8218D1F99A123007FB989 /* CarOwnerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarOwnerViewModel.swift; sourceTree = "<group>"; };
+		CAA821911F99CDA8007FB989 /* LawbreakerInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawbreakerInfo.swift; sourceTree = "<group>"; };
+		CAA821931F99CED7007FB989 /* LawbreakerInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawbreakerInfoViewModel.swift; sourceTree = "<group>"; };
 		CABDCBB31F94D759000E5451 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		CABDCBB51F950851000E5451 /* LogViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogViewModel.swift; sourceTree = "<group>"; };
 		CAC68E581F8753B0000F7CF5 /* ProfileViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewCell.swift; sourceTree = "<group>"; };
@@ -218,6 +228,11 @@
 			children = (
 				CABDCBB31F94D759000E5451 /* Log.swift */,
 				CABDCBB51F950851000E5451 /* LogViewModel.swift */,
+				CAA821891F999FD1007FB989 /* CarOwner.swift */,
+				CAA8218D1F99A123007FB989 /* CarOwnerViewModel.swift */,
+				CAA8218B1F999FDD007FB989 /* Car.swift */,
+				CAA821911F99CDA8007FB989 /* LawbreakerInfo.swift */,
+				CAA821931F99CED7007FB989 /* LawbreakerInfoViewModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -497,6 +512,7 @@
 				CA0793CD1F95B45C00D752E6 /* LawBreakerInfoCheckInViewCell.swift in Sources */,
 				CA0793CB1F95B42E00D752E6 /* CarOwnerInfoCheckInViewCell.swift in Sources */,
 				CABDCBB41F94D759000E5451 /* Log.swift in Sources */,
+				CAA8218A1F999FD1007FB989 /* CarOwner.swift in Sources */,
 				CA0793BF1F95A99F00D752E6 /* LawBreakerInfoSearchByICViewController.swift in Sources */,
 				CACDCEF11F7DE0E500B2EDAA /* TabBarViewController.swift in Sources */,
 				CACDCEF31F7DE0E500B2EDAA /* RegisterView.swift in Sources */,
@@ -508,12 +524,15 @@
 				CA0793C51F95B0C400D752E6 /* HomeViewCell.swift in Sources */,
 				CAC68E5B1F87814A000F7CF5 /* ModifyProfileInfoViewController.swift in Sources */,
 				CA9A17421F96467B0046F0A3 /* TextView.swift in Sources */,
+				CAA8218C1F999FDD007FB989 /* Car.swift in Sources */,
+				CAA821921F99CDA8007FB989 /* LawbreakerInfo.swift in Sources */,
 				CAC6D8A01F96E100003EE9D9 /* TextField.swift in Sources */,
 				CA4D296A1F948D09005B74A1 /* LogsViewCell.swift in Sources */,
 				CABDCBB61F950851000E5451 /* LogViewModel.swift in Sources */,
 				CA0793C71F95B18F00D752E6 /* CarInfoCheckInViewCell.swift in Sources */,
 				CA4D29661F948AD3005B74A1 /* SearchViewController.swift in Sources */,
 				CA0793D11F95B4BC00D752E6 /* CarOwnerInfoSearchViewCell.swift in Sources */,
+				CAA821941F99CED7007FB989 /* LawbreakerInfoViewModel.swift in Sources */,
 				CA0793D71F95B52B00D752E6 /* LawBreakerInfoSearchByCarOwnerNameViewCell.swift in Sources */,
 				CACDCEF71F7DE0E500B2EDAA /* UIColor-Extension.swift in Sources */,
 				CACDCEF81F7DE0E500B2EDAA /* UINavigationBar-Extension.swift in Sources */,
@@ -524,6 +543,7 @@
 				CA0793B51F95A8CC00D752E6 /* CarInfoCheckInViewController.swift in Sources */,
 				CADBED0A1F7DED0900B06B84 /* UserInfo.swift in Sources */,
 				CA0793C11F95A9CF00D752E6 /* LawBreakerInfoSearchByCarIdViewController.swift in Sources */,
+				CAA8218E1F99A123007FB989 /* CarOwnerViewModel.swift in Sources */,
 				CA0793C31F95A9F100D752E6 /* LawBreakerInfoSearchByCarOwnerNameViewController.swift in Sources */,
 				CAC68E5D1F87853E000F7CF5 /* ModifyProfileInfoViewCell.swift in Sources */,
 				CA4D29641F948AC3005B74A1 /* CheckInViewController.swift in Sources */,
@@ -648,13 +668,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = V2RZX97NSW;
+				DEVELOPMENT_TEAM = FWV4KXC2NV;
 				INFOPLIST_FILE = Traffic_sys_Swift/Classes/Others/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.hhh.Traffic-sys-Swift";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -666,13 +688,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = V2RZX97NSW;
+				DEVELOPMENT_TEAM = FWV4KXC2NV;
 				INFOPLIST_FILE = Traffic_sys_Swift/Classes/Others/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.hhh.Traffic-sys-Swift";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

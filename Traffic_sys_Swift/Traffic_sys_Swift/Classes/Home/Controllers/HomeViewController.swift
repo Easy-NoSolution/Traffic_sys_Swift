@@ -12,7 +12,7 @@ class HomeViewController: UIViewController {
 
     // MARK: - 自定义属性
     lazy var layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-    lazy var collectionView: UICollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+    lazy var collectionView: UICollectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: kWindowWidth, height: kWindowHeight), collectionViewLayout: layout)
     let data = [["search1", "查询"], ["register", "登记"], ["log", "日志"]]
     
     // MARK: - 系统回调函数
@@ -61,28 +61,21 @@ extension HomeViewController {
     }
     
     func setupView() {
+        
 //        1.添加控制器
         view.addSubview(collectionView)
         
-//        2.设置frame
-        collectionView.snp.makeConstraints { (make) in
-            make.top.equalTo(64)
-            make.left.right.equalTo(0)
-            make.bottom.equalTo(-48)
-        }
-        
-//        3.设置属性
+//        2.设置属性
         collectionView.register(HomeCollectionViewCell.self, forCellWithReuseIdentifier: kHomeCellIdentifier)
         collectionView.backgroundColor = UIColor.clear
         collectionView.dataSource = self
         collectionView.delegate = self
         
-        layout.scrollDirection = .vertical
-        layout.minimumLineSpacing = 85.0
-        layout.minimumInteritemSpacing = 30.0
         layout.itemSize = CGSize(width: 56, height: 85)
         layout.sectionInset = UIEdgeInsetsMake(29, 34, 29, 34)
-        
+        layout.scrollDirection = .vertical
+        layout.minimumLineSpacing = 30.0
+        layout.minimumInteritemSpacing = (kWindowWidth - 68 - 168) / 2.0
     }
 }
 
@@ -128,3 +121,23 @@ extension HomeViewController {
         hidesBottomBarWhenPushed = false
     }
 }
+
+//extension HomeViewController: UICollectionViewDelegateFlowLayout {
+//
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+//        print(1)
+//        return UIEdgeInsetsMake(29, 34, 29, 34)
+//    }
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        print(2)
+//        return CGSize(width: 56, height: 85)
+//    }
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+//        return 30.0
+//    }
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+//        print(4)
+//        return (kWindowWidth - 68 - 168) / 2.0
+//    }
+//}
+

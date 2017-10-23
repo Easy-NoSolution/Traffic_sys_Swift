@@ -7,11 +7,14 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 class CarInfoCheckInViewController: UITableViewController {
 
     // MARK: - 自定义属性
     lazy var titles: Array<String> = ["车牌号", "汽车品牌", "汽车颜色", "车主身份证号码"]
+    lazy var tableViewCellsData = Dictionary<NSInteger, AnyObject>()
+    lazy var doneBtn: UIBarButtonItem = UIBarButtonItem(title: "完成", style: .plain, target: self, action: #selector(doneBtnClicked(_:)))
     
     // MARK: - 系统回调函数
     
@@ -56,6 +59,7 @@ class CarInfoCheckInViewController: UITableViewController {
 //        2.设置属性
         cell.titleLabel.text = titles[indexPath.row] + "："
         cell.valueTextField.placeholder = "请输入" + titles[indexPath.row]
+        cell.valueTextField.delegate = self
 
 //        3.返回cell
         return cell
@@ -123,7 +127,7 @@ extension CarInfoCheckInViewController {
         navigationController?.navigationBar.setColor(color: UIColor.colorWithHex(hex: kBackGroundColor, alpha: 1.0))
         
 //        3.设置完成按钮
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "完成", style: .plain, target: self, action: #selector(doneBtnClicked(_:)))
+        navigationItem.rightBarButtonItem = doneBtn
     }
     
     func setupView() {
@@ -135,6 +139,94 @@ extension CarInfoCheckInViewController {
 extension CarInfoCheckInViewController {
     
     @objc func doneBtnClicked(_ sender: Any) {
-        print(1)
+//        1.获取参数
+        let carId: String = tableViewCellsData[0] as? String ?? ""
+        let carName: String = tableViewCellsData[1] as? String ?? ""
+        let carColor: String = tableViewCellsData[2] as? String ?? ""
+        let carOwnerId: String = tableViewCellsData[3] as? String ?? ""
+
+//        2.验证值
+//        2.1.车牌号
+        if !RegexTool.isQualified(text: carId, pattern: "^[\u{4e00}-\u{9fa5}]{1}[a-zA-Z]{1}[a-zA-Z_0-9]{4}[a-zA-Z_0-9_\u{4e00}-\u{9fa5}]$") {
+            SVProgressHUD.setMinimumDismissTimeInterval(1)
+            SVProgressHUD.showError(withStatus: "车牌号为空或者格式不正确")
+            return
+        }
+//        2.2.汽车品牌
+        if !RegexTool.isQualified(text: carName, pattern: "^[\u{4E00}-\u{9FFF}]+$") {
+            SVProgressHUD.setMinimumDismissTimeInterval(1)
+            SVProgressHUD.showError(withStatus: "汽车品牌为空或者格式不正确")
+            return
+        }
+//        2.3.汽车颜色
+        if carColor.characters.count == 0 {
+            SVProgressHUD.setMinimumDismissTimeInterval(1)
+            SVProgressHUD.showError(withStatus: "汽车颜色为空或者格式不正确")
+            return
+        }
+        
+//        2.4.身份证号码
+        if !RegexTool.isQualified(text: carOwnerId, pattern: "^(\\d{14}|\\d{17})(\\d|[xX])$") {
+            SVProgressHUD.setMinimumDismissTimeInterval(1)
+            SVProgressHUD.showError(withStatus: "身份证号码为空或者格式不正确")
+            return
+        }
+        
+//        3.发送网络请求
+        SVProgressHUD.showInfo(withStatus: "正在注册车辆信息...")
+        NetworkTools.shareInstance.carInfoCheckIn(carId: carId, carName: carName, carColor: carColor, carOwnerId: carOwnerId) {[weak self] (response, error) in
+            SVProgressHUD.dismiss()
+//            3.1.校验nil值
+            if error != nil {
+                print(error ?? "error")
+                return
+            }
+            
+//            3.2.获取可选类型中的数据
+            guard let responseDict = response else {
+                return
+            }
+            
+//            3.3.判断数据处理是否成功
+            if (responseDict["result"]?.isEqual("failed"))! {
+                
+//                3.3.1.提示数据处理失败
+                SVProgressHUD.setMinimumDismissTimeInterval(1)
+                SVProgressHUD.showError(withStatus: responseDict["errorInfo"] as! String)
+                
+                return
+            }
+            
+//            3.4.返回上一级控制器
+            self?.navigationController?.popViewController(animated: true)
+        }
     }
 }
+
+extension CarInfoCheckInViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+//        1.获取当前正在编辑的cell
+        let cell: CarInfoCheckInViewCell = textField.superview?.superview as! CarInfoCheckInViewCell
+        
+//        2.获取当前cell的indexPath及值
+        guard let indexPath = tableView.indexPath(for: cell) else {
+            return true
+        }
+        guard let text = textField.text as NSString? else {
+            return true
+        }
+        
+//        3.将值赋值到字典中
+        tableViewCellsData[indexPath.row] = text.replacingCharacters(in: range, with: string) as AnyObject
+        
+        return true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        view.endEditing(true)
+        return true
+    }
+    
+}
+

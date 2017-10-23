@@ -1,20 +1,21 @@
 //
-//  CarInfoSearchViewController.swift
+//  LogsViewController.swift
 //  Traffic_sys_Swift
 //
-//  Created by 易无解 on 17/10/2017.
+//  Created by 易无解 on 16/10/2017.
 //  Copyright © 2017 易无解. All rights reserved.
 //
 
 import UIKit
-import SVProgressHUD
+import MJRefresh
 
-class CarInfoSearchViewController: UITableViewController {
+class LogsViewController: UITableViewController {
 
     // MARK: - 自定义属性
-    lazy var titles: Array<String> = ["车牌号", "汽车品牌", "汽车颜色", "车主身份证号码"]
-    let titleTextField = UITextField()
-    var carInfo: Car?
+    lazy var userId: String = (UserInfoViewModel.shareInstance.userInfo?.userId)!
+    lazy var offset: NSInteger = 0
+    lazy var rows: NSInteger = 10
+    lazy var logsDataArray: Array = Array<LogViewModel>()
     
     // MARK: - 系统回调函数
     
@@ -28,58 +29,63 @@ class CarInfoSearchViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
+//        1.添加下拉刷新控件
+        let header: MJRefreshNormalHeader = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(loadLogsData))
+        header.setTitle("下拉刷新", for: .idle)
+        header.setTitle("松手开始刷新", for: .pulling)
+        header.setTitle("加载中...", for: .refreshing)
         
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        header.beginRefreshing()
+        self.tableView.mj_header = header
+        
+//        2.添加上拉刷新控件
+        let footer: MJRefreshAutoNormalFooter = MJRefreshAutoNormalFooter(refreshingTarget: self, refreshingAction: #selector(loadNextPageLogsData))
+        footer.setTitle("上拉刷新", for: .idle)
+        footer.setTitle("松手开始刷新", for: .pulling)
+        footer.setTitle("加载中...", for: .refreshing)
+        
+        self.tableView.mj_footer = footer
+        
     }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+
     // MARK: - Table view data source
-    
+
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
-    
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return titles.count
+        return logsDataArray.count
     }
-    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 //        1.创建cell
-        let cell = CarInfoSearchViewCell.searchCellWithTableView(tableView: tableView) as! CarInfoSearchViewCell
-        
-//        2.设置属性
-        cell.titleLabel.text = titles[indexPath.row] + "："
-        
-        switch indexPath.row {
-        case 0:
-            cell.valueLabel.text = carInfo?.carId
-        case 1:
-            cell.valueLabel.text = carInfo?.carName
-        case 2:
-            cell.valueLabel.text = carInfo?.carColor
-        case 3:
-            cell.valueLabel.text = carInfo?.carOwnerId
-        default:
-            break;
+        let cell = LogsViewCell.checkInCellWithTableView(tableView: tableView) as! LogsViewCell
+
+//        2.赋值
+        let logVM = logsDataArray[indexPath.row]
+        if logVM.loginDate == nil {
+            cell.titleLabel.text = "退出时间"
+            cell.valueLabel.text = logVM.logoutDate!
+        } else {
+            cell.titleLabel.text = "登录时间"
+            cell.valueLabel.text = logVM.loginDate!
         }
-        
+
 //        3.返回cell
         return cell
     }
-    
+
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return UIView()
     }
-
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -128,83 +134,78 @@ class CarInfoSearchViewController: UITableViewController {
 }
 
 // MARK: - 设置UI界面
-extension CarInfoSearchViewController {
+extension LogsViewController {
     
     func setupNavigationItem() {
 //        1.设置标题
-        titleTextField.placeholder = "请输入车牌号"
-        titleTextField.delegate = self
-        navigationItem.titleView = titleTextField
+        navigationItem.title = "日志"
         
-//        2.设置navigationBar的颜色
+//        2.设置navigationitem透明度
         navigationController?.navigationBar.setColor(color: UIColor.colorWithHex(hex: kBackGroundColor, alpha: 1.0))
-        
-//        3.设置完成按钮
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(searchBtnClicked(_:)))
-    }
-    
-    func setupView() {
-        
     }
 }
 
-// MARK: - 事件监听函数
-extension CarInfoSearchViewController {
+// MARK: - 数据请求
+extension LogsViewController {
     
-    @objc func searchBtnClicked(_ sender: Any) {
+    @objc func loadLogsData() {
+//        1.清空数据
+        offset = 0
+        logsDataArray.removeAll()
         
-//        1.获取参数
-        let carId: String = titleTextField.text ?? ""
-        
-//        2.验证值
-//        2.1.车牌号
-        if !RegexTool.isQualified(text: carId, pattern: "^[\u{4e00}-\u{9fa5}]{1}[a-zA-Z]{1}[a-zA-Z_0-9]{4}[a-zA-Z_0-9_\u{4e00}-\u{9fa5}]$") {
-            SVProgressHUD.setMinimumDismissTimeInterval(1)
-            SVProgressHUD.showError(withStatus: "车牌号为空或者格式不正确")
-            return
-        }
-        
-//        3.发送网络请求
-        SVProgressHUD.showInfo(withStatus: "正在获取车辆信息...")
-        NetworkTools.shareInstance.searchCarInfo(carId: carId) {[weak self] (response, error) in
-            SVProgressHUD.dismiss()
-//            3.1.校验nil值
+//        2.发送网络请求
+        NetworkTools.shareInstance.loadLogs(userId: userId, offset: offset, rows: rows) {[weak self] (response, error) in
+//            2.1.校验参数
             if error != nil {
                 print(error ?? "error")
                 return
             }
             
-//            3.2.获取可选类型中的数据
+//            2.2.获取请求的值
             guard let responseDict = response else {
                 return
             }
             
-//            3.3.判断数据处理是否成功
-            if (responseDict["result"]?.isEqual("failed"))! {
-                
-//                3.3.1.提示数据处理失败
-                SVProgressHUD.setMinimumDismissTimeInterval(1)
-                SVProgressHUD.showError(withStatus: responseDict["errorInfo"] as! String)
-                
-                return
+//            2.3.字典转模型
+            for dic in responseDict["logs"] as! Array<[String : Any]> {
+                let log = Log(dict: dic)
+                let logVM = LogViewModel(log: log)
+                self?.logsDataArray.append(logVM)
             }
             
-//            3.4.字典转模型
-            self?.carInfo = Car(dict: responseDict["carInfo"] as! [String : Any])
-            
-//            3.5.更新tableView数据
+//            2.4.更新数据
             self?.tableView.reloadData()
+            self?.tableView.mj_header.endRefreshing()
         }
     }
     
-}
-
-// MARK: - UITextFieldDelegate
-extension CarInfoSearchViewController: UITextFieldDelegate {
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        titleTextField.resignFirstResponder()
-        return true
+    @objc func loadNextPageLogsData() {
+//        1.设置参数
+        offset = logsDataArray.count
+        
+//        2.发送网络请求
+        NetworkTools.shareInstance.loadLogs(userId: userId, offset: offset, rows: rows) {[weak self] (response, error) in
+//            2.1.校验参数
+            if error != nil {
+                print(error ?? "error")
+                return
+            }
+            
+//            2.2.获取请求的值
+            guard let responseDict = response else {
+                return
+            }
+            
+//            2.3.字典转模型
+            for dic in responseDict["logs"] as! Array<[String : Any]> {
+                let log = Log(dict: dic)
+                let logVM = LogViewModel(log: log)
+                self?.logsDataArray.append(logVM)
+            }
+            
+//            2.4.更新数据
+            self?.tableView.reloadData()
+            self?.tableView.mj_footer.endRefreshing()
+        }
     }
-    
 }

@@ -7,12 +7,15 @@
 //
 
 import UIKit
+import SDWebImage
+import SVProgressHUD
 
 class CarOwnerInfoSearchViewController: UITableViewController {
 
     // MARK: - 自定义属性
     lazy var titles: Array<String> = ["身份证号码", "姓名", "性别", "出生日期", "家庭住址", "电话号码"]
-    var avatarImageView: UIImageView = UIImageView()
+    let titleTextField = UITextField()
+    var carOwnerVM: CarOwnerViewModel?
     
     // MARK: - 系统回调函数
     
@@ -26,7 +29,6 @@ class CarOwnerInfoSearchViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        avatarImageView.backgroundColor = UIColor.green
     }
     
     override func didReceiveMemoryWarning() {
@@ -52,7 +54,23 @@ class CarOwnerInfoSearchViewController: UITableViewController {
         
 //        2.设置属性
         cell.titleLabel.text = titles[indexPath.row] + "："
-        cell.valueLabel.text = "请输入" + titles[indexPath.row]
+        
+        switch indexPath.row {
+        case 0:
+            cell.valueLabel.text = carOwnerVM?.carOwner?.carOwnerId
+        case 1:
+            cell.valueLabel.text = carOwnerVM?.carOwner?.carOwnerName
+        case 2:
+            cell.valueLabel.text = carOwnerVM?.carOwnerSex
+        case 3:
+            cell.valueLabel.text = carOwnerVM?.carOwnerBirthday
+        case 4:
+            cell.valueLabel.text = carOwnerVM?.carOwner?.carOwnerAddress
+        case 5:
+            cell.valueLabel.text = carOwnerVM?.carOwner?.carOwnerPhoneNumber
+        default:
+            break;
+        }
         
 //        3.返回cell
         return cell
@@ -66,6 +84,8 @@ class CarOwnerInfoSearchViewController: UITableViewController {
         let headerView = UIView()
         headerView.backgroundColor = UIColor.white
         
+        let avatarImageView: UIImageView = UIImageView()
+        avatarImageView.sd_setImage(with: carOwnerVM?.carOwnerAvatarUrl, placeholderImage: UIImage(named: "avatar_default_big"))
         headerView.addSubview(avatarImageView)
         avatarImageView.snp.makeConstraints { (make) in
             make.center.equalTo(headerView.snp.center)
@@ -141,8 +161,8 @@ extension CarOwnerInfoSearchViewController {
     
     func setupNavigationItem() {
 //        1.设置标题
-        let titleTextField = UITextField()
         titleTextField.placeholder = "    请输入身份证号码    "
+        titleTextField.delegate = self
         navigationItem.titleView = titleTextField
         
 //        2.设置navigationBar的颜色
@@ -161,10 +181,59 @@ extension CarOwnerInfoSearchViewController {
 extension CarOwnerInfoSearchViewController {
     
     @objc func searchBtnClicked(_ sender: Any) {
-        print(1)
+        
+//        1.获取参数
+        let carOwnerId: String = titleTextField.text ?? ""
+        
+//        2.验证值
+//        2.1.身份证号码
+        if !RegexTool.isQualified(text: carOwnerId, pattern: "^(\\d{14}|\\d{17})(\\d|[xX])$") {
+            SVProgressHUD.setMinimumDismissTimeInterval(1)
+            SVProgressHUD.showError(withStatus: "身份证号码为空或者格式不正确")
+            return
+        }
+        
+//        3.发送网络请求
+        SVProgressHUD.showInfo(withStatus: "正在获取车主信息...")
+        NetworkTools.shareInstance.searchCarOwnerInfo(carOwnerId: carOwnerId) {[weak self] (response, error) in
+            SVProgressHUD.dismiss()
+//            3.1.校验nil值
+            if error != nil {
+                print(error ?? "error")
+                return
+            }
+            
+//            3.2.获取可选类型中的数据
+            guard let responseDict = response else {
+                return
+            }
+            
+//            3.3.判断数据处理是否成功
+            if (responseDict["result"]?.isEqual("failed"))! {
+                
+//                3.3.1.提示数据处理失败
+                SVProgressHUD.setMinimumDismissTimeInterval(1)
+                SVProgressHUD.showError(withStatus: responseDict["errorInfo"] as! String)
+                
+                return
+            }
+            
+//            3.4.字典转模型
+            let carOwner = CarOwner(dict: responseDict["carOwnerInfo"] as! [String : Any])
+            self?.carOwnerVM = CarOwnerViewModel(carOwner: carOwner)
+            
+//            3.5.更新tableView数据
+            self?.tableView.reloadData()
+        }
+    }
+}
+
+// MARK: - UITextFieldDelegate
+extension CarOwnerInfoSearchViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        titleTextField.resignFirstResponder()
+        return true
     }
     
-    @objc func userAvatarBtnClicked(_ sender: Any) {
-        print(2)
-    }
 }

@@ -123,16 +123,20 @@ extension RegisterViewController {
         
 //        3.设置属性
         phoneView.titleLabel.text = "手机：+86"
+        phoneView.valueTextField.delegate = self
         
         passwordView.titleLabel.text = "设置密码："
         passwordView.valueTextField.isSecureTextEntry = true
         passwordView.valueTextField.placeholder = "设置6-16位密码"
+        passwordView.valueTextField.delegate = self
         
         reinputPasswordView.titleLabel.text = "确认密码："
         reinputPasswordView.valueTextField.isSecureTextEntry = true
         reinputPasswordView.valueTextField.placeholder = "设置6-16位密码"
+        reinputPasswordView.valueTextField.delegate = self
         
         usernameView.titleLabel.text = "用户名："
+        usernameView.valueTextField.delegate = self
         
         sexView.titleLabel.text = "性别："
         sexView.valueTextField.isHidden = true
@@ -149,6 +153,7 @@ extension RegisterViewController {
         doneBtn.tintColor = UIColor.blue
         accessoryView.items = [flexibleBtn, doneBtn]
         birthdayView.valueTextField.inputAccessoryView = accessoryView
+        birthdayView.valueTextField.delegate = self
         
         avatarBtn.setBackgroundImage(UIImage(named: "addImage"), for: UIControlState.normal)
         avatarBtn.addTarget(self, action: #selector(avatarBtnClicked(_:)), for: .touchUpInside)
@@ -181,7 +186,7 @@ extension RegisterViewController {
         let userAvatar: UIImage? = avatarBtn.backgroundImage(for: .normal)
         let password = passwordView.valueTextField.text!
         
-////        2.验证值
+//        2.验证值
 //        2.1.手机号
         if !RegexTool.isQualified(text: userId, pattern: "^1[3578]\\d{9}$") {
             SVProgressHUD.setMinimumDismissTimeInterval(1)
@@ -231,11 +236,11 @@ extension RegisterViewController {
                 
 //                3.1.3.判断数据处理是否成功
                 if (responseDict["result"]?.isEqual("failed"))! {
-                    print("errorInfo:" + (responseDict["errorInfo"] as! String))
                     
 //                3.1.3.1.提示数据处理失败
                     SVProgressHUD.setMinimumDismissTimeInterval(1)
                     SVProgressHUD.showError(withStatus: responseDict["errorInfo"] as! String)
+                    
                     return
                 }
                 
@@ -260,11 +265,11 @@ extension RegisterViewController {
                 
 //                3.2.3.判断数据处理是否成功
                 if (responseDict["result"]?.isEqual("failed"))! {
-                    print("errorInfo:" + (responseDict["errorInfo"] as! String))
                     
 //                3.2.3.1.提示数据处理失败
                     SVProgressHUD.setMinimumDismissTimeInterval(1)
                     SVProgressHUD.showError(withStatus: responseDict["errorInfo"] as! String)
+                    
                     return
                 }
                 
@@ -310,4 +315,14 @@ extension RegisterViewController: UIImagePickerControllerDelegate, UINavigationC
 //        3.退出控制器
         picker.dismiss(animated: true, completion: nil)
     }
+}
+
+// MARK: - UITextFieldDelegate
+extension RegisterViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        view.endEditing(true)
+        return true
+    }
+    
 }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 class ForgetPwdViewController: UIViewController {
 
@@ -95,14 +96,17 @@ extension ForgetPwdViewController {
         
 //        3.设置属性
         phoneView.titleLabel.text = "手机：+86"
+        phoneView.valueTextField.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(textFieldTextDidChange(_:)), name: NSNotification.Name.UITextFieldTextDidChange, object: phoneView.valueTextField)
         
         passwordView.titleLabel.text = "新密码："
         passwordView.valueTextField.isSecureTextEntry = true
+        passwordView.valueTextField.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(textFieldTextDidChange(_:)), name: NSNotification.Name.UITextFieldTextDidChange, object: passwordView.valueTextField)
         
         reinputPasswordView.titleLabel.text = "确认密码："
         reinputPasswordView.valueTextField.isSecureTextEntry = true
+        reinputPasswordView.valueTextField.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(textFieldTextDidChange(_:)), name: NSNotification.Name.UITextFieldTextDidChange, object: reinputPasswordView.valueTextField)
         
         findPwdBtn.setTitle("重置密码", for: .normal)
@@ -127,7 +131,9 @@ extension ForgetPwdViewController {
         let password = passwordView.valueTextField.text!
         
 //        2.发送网络请求
+        SVProgressHUD.showInfo(withStatus: "正在重置密码...")
         NetworkTools.shareInstance.modifyPassword(userId: userId, password: password) {[weak self] (response, error) in
+            SVProgressHUD.dismiss()
 //            2.1.校验错误
             if error != nil {
                 print(error ?? "error")
@@ -141,9 +147,10 @@ extension ForgetPwdViewController {
             
 //            2.3.判断数据处理是否成功
             if (responseDict["result"]?.isEqual("failed"))! {
-                print("errorInfo:" + (responseDict["errorInfo"] as! String))
                 
 //                2.3.1.提示数据处理失败
+                SVProgressHUD.setMinimumDismissTimeInterval(1)
+                SVProgressHUD.showError(withStatus: responseDict["errorInfo"] as! String)
                 
                 return
             }
@@ -154,4 +161,14 @@ extension ForgetPwdViewController {
             }
         }
     }
+}
+
+// MARK: - UITextFieldDelegate
+extension ForgetPwdViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        view.endEditing(true)
+        return true
+    }
+    
 }

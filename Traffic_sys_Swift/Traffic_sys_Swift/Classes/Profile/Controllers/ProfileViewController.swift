@@ -9,6 +9,7 @@
 import UIKit
 import SDWebImage
 import MJRefresh
+import SVProgressHUD
 
 class ProfileViewController: UITableViewController {
 
@@ -199,22 +200,24 @@ extension ProfileViewController {
     @objc func updateUserInfo(_ sender: Any) {
         
         userInfo = UserInfoViewModel.shareInstance.userInfo
-        avatarImageView.sd_setImage(with: UserInfoViewModel.shareInstance.userAvatarUrl)
         avatarImageView.sd_setImage(with: UserInfoViewModel.shareInstance.userAvatarUrl, placeholderImage: UIImage(named: "avatar_default_big"))
         tableView.reloadData()
     }
     
     @objc func logoutBtnClicked(_ sender: Any) {
         
-//        1.添加退出记录
+//        1.获取参数
         let userId: String = (UserInfoViewModel.shareInstance.userInfo?.userId)!
         let logoutDate: Date = Date()
         let fmt: DateFormatter = DateFormatter()
         fmt.dateFormat = "yyyy-MM-dd hh:mm:ss"
         fmt.timeZone = TimeZone(identifier: "Asia/Shanghai")
         fmt.locale = Locale(identifier: "zh_Hans_CN")
+        
+//        2.发送网络请求
+        SVProgressHUD.showInfo(withStatus: "正在退出...")
         NetworkTools.shareInstance.addLoginAndLogoutLog(userId: userId, loginDate: nil, logoutDate: fmt.string(from: logoutDate), finished: {[weak self] (response, error) in
-            
+            SVProgressHUD.dismiss()
 //          1.1.校验错误
             if error != nil {
                 print(error ?? "error")
@@ -228,9 +231,10 @@ extension ProfileViewController {
             
 //          1.3.判断数据处理是否成功
             if (responseDict["result"]?.isEqual("failed"))! {
-                print("errorInfo:" + (responseDict["errorInfo"] as! String))
                 
-                //          1.3.1.提示数据处理失败
+//            1.3.1.提示数据处理失败
+                SVProgressHUD.setMinimumDismissTimeInterval(1)
+                SVProgressHUD.showError(withStatus: responseDict["errorInfo"] as! String)
                 
                 return
             }
