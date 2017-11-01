@@ -46,6 +46,7 @@ class UserInfoViewModel: NSObject {
         super.init()
         
 //        1.从沙盒中获取用户信息
+        print(UserInfoViewModel.userInfoPath)
         userInfo = NSKeyedUnarchiver.unarchiveObject(withFile: UserInfoViewModel.userInfoPath) as? UserInfo;
     }
 }

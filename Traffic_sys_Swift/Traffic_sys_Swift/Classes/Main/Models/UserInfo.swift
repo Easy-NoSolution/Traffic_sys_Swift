@@ -31,23 +31,64 @@ class UserInfo: NSObject, NSCoding {
     }
     
     // MARK: - 归档和解档
-//    归档
+//    解档
     required init?(coder aDecoder: NSCoder) {
-        userId = aDecoder.decodeObject(forKey: "userId") as? String
-        username = aDecoder.decodeObject(forKey: "username") as? String
-        userSex = aDecoder.decodeInteger(forKey: "userSex")
-        userBirthday = aDecoder.decodeDouble(forKey: "userBirthday")
-        userAvatar = aDecoder.decodeObject(forKey: "userAvatar") as? String
-        password = aDecoder.decodeObject(forKey: "password") as? String
+        super.init()
+        
+//        1.获取所有属性
+//        1.1.创建保存属性个数的变量
+        var count: UInt32 = 0
+//        1.2.获取变量的指针
+        let outCount = withUnsafeMutablePointer(to: &count) { (outCount: UnsafeMutablePointer<UInt32>) -> UnsafeMutablePointer<UInt32> in
+            return outCount
+        }
+//        1.3.获取属性数组
+        let ivars = class_copyIvarList(UserInfo.self, outCount)
+        
+        for i in 0..<count {
+//            2.获取键值对
+//            2.1.获取ivars中的值
+            let ivar = ivars![Int(i)]
+//            2.2.获取键
+            let ivarKey = String(cString: ivar_getName(ivar)!)
+//            2.3.获取值
+            let ivarValue = aDecoder.decodeObject(forKey: ivarKey)
+            
+//            3.设置属性的值
+            setValue(ivarValue, forKey: ivarKey)
+        }
+        
+//        4.释放内存
+        free(ivars)
     }
     
-//    解档
+//    归档
     func encode(with aCoder: NSCoder) {
-        aCoder.encode(userId, forKey: "userId")
-        aCoder.encode(username, forKey: "username")
-        aCoder.encode(userSex, forKey: "userSex")
-        aCoder.encode(userBirthday, forKey: "userBirthday")
-        aCoder.encode(userAvatar, forKey: "userAvatar")
-        aCoder.encode(password, forKey: "password")
+        
+//        1.获取所有属性
+//        1.1.创建保存属性个数的变量
+        var count: UInt32 = 0
+//        1.2.获取变量的指针
+        let outCount = withUnsafeMutablePointer(to: &count) { (outCount: UnsafeMutablePointer<UInt32>) -> UnsafeMutablePointer<UInt32> in
+            return outCount
+        }
+//        1.3.获取属性数组
+        let ivars = class_copyIvarList(UserInfo.self, outCount)
+        
+        for i in 0..<count {
+//            2.获取键值对
+//            2.1.获取ivars中的值
+            let ivar = ivars![Int(i)]
+//            2.2.获取键
+            let ivarKey = String(cString: ivar_getName(ivar)!)
+//            2.3.获取值
+            let ivarValue = value(forKey: ivarKey)
+            
+//            3.归档
+            aCoder.encode(ivarValue, forKey: ivarKey)
+        }
+        
+//        4.释放内存
+        free(ivars)
     }
 }
